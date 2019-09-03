@@ -1,6 +1,6 @@
 # Extraction Engine
 
-Extract data as json from html web pages using YAML configurations
+Convert HTML data into cleaned JSON  using YAML configurations
 
 ## How to install
 ```bash
