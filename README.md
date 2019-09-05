@@ -4,7 +4,7 @@ Convert HTML data into cleaned JSON  using YAML configurations
 
 ## How to install
 ```bash
-pip install -e git+https://github.com:crawlerflow/extraction-engine.git#egg=extraction_engine
+pip install -e git+https://github.com/crawlerflow/extraction-engine.git#egg=extraction_engine
 ```
 
 ## How to use
