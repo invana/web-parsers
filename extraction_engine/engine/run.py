@@ -32,8 +32,8 @@ class ExtractionEngine(object):
                 return data
             except Exception as e:
                 logger.error("Failed to engine the extractor_id {} on url {} with error:".format(extractor_id,
-                                                                                              self.url,
-                                                                                              e))
+                                                                                                 self.url,
+                                                                                                 e))
         return {extractor_id: None}
 
     def extract_data(self, ):
