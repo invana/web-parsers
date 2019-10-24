@@ -1,2 +1,7 @@
-parsel>=1.5.2
-pyyaml>=5.1.2
+certifi==2019.9.11
+cssselect==1.1.0
+lxml==4.4.1
+parsel==1.5.2
+PyYAML==5.1.2
+six==1.12.0
+w3lib==1.21.0

@@ -1,8 +1,11 @@
-class ExtractorBase(object):
+"""
+
+
+"""
+
+
+class ExtractorBase:
     """
-
-
-
 
     """
 

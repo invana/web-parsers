@@ -7,7 +7,6 @@ import yaml
 html = open("page.html", "r").read()
 # extraction_manifest = yaml.load(open("extract.yaml").read(),  yaml.Loader)
 extraction_manifest_yaml = """
-extractors:
 - extractor_type: MetaTagExtractor
   extractor_id: meta_tags
 - extractor_type: CustomContentExtractor
