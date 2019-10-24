@@ -1,5 +1,8 @@
 import locale
 import re
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class FieldTransformerBase(object):
@@ -28,7 +31,7 @@ class FieldTransformerBase(object):
             try:
                 result_data = transformation_method(self.data)
             except Exception as e:
-                # print(e)
+                logger.debug(e)
                 result_data = self.data
             return result_data
         else:

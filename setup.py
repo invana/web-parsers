@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='extraction-engine',
-    version='0.0.1',
+    version='0.0.2',
     description='Extract data as json from html web pages using YAML configurations',
     author='Ravi Raja Merugu',
     author_email='ravi@invanalabs.ai',

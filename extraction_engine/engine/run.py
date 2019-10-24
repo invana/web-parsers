@@ -39,7 +39,6 @@ class ExtractionEngine(object):
     def extract_data(self, ):
         all_extracted_data = {}
         selector = self.convert_html_to_selector()
-        print (self.extraction_config)
         for extractor in self.extraction_config:
             extracted_data = self.run_extractor(selector=selector, extractor=extractor)
             all_extracted_data.update(extracted_data)

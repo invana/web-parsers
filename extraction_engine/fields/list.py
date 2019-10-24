@@ -1,4 +1,7 @@
 from .single import StringField, IntField, FloatField, DictField, RawField
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class ListFieldTransformerBase(object):
@@ -20,7 +23,7 @@ class ListFieldTransformerBase(object):
                 result_data = self.transformer_class(data=d).transform()
                 result_data_list.append(result_data)
             except Exception as e:
-                print(e)
+                logger.debug(e)
         return result_data_list
 
     def transform(self):
