@@ -19,7 +19,7 @@ def get_domain(url):
 
 def get_absolute_url(url=None, origin_url=None):
     url = url.lstrip("/")
-
+    url = url.lstrip("./")
     url_parsed = urlparse(origin_url)
     scheme = url_parsed.scheme
     host = url_parsed.netloc
