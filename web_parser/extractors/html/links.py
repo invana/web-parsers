@@ -1,4 +1,4 @@
-from extractors.base import ExtractorBase
+from web_parser.extractors.base import ExtractorBase
 from web_parser.utils.url import get_urn, get_domain
 
 
@@ -48,7 +48,7 @@ class ForeignDomainLinkExtractor(ExtractorBase):
 
 #
 # class PaginationLinkExtractor(ExtractorBase):
-#     def engines(self):
+#     def parsers(self):
 #         data = {}
 #         extracted_data = {}
 #         for selector in self.extractor.get('data_selectors', []):

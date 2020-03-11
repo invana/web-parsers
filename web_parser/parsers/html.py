@@ -31,7 +31,7 @@ class HTMLParserEngine(object):
                 data = extractor_object.run()
                 return data
             except Exception as error:
-                logger.error("Failed to engines the extractor_id {extractor_id} on url {url} with error: {error}".format(
+                logger.error("Failed to parsers the extractor_id {extractor_id} on url {url} with error: {error}".format(
                     extractor_id=extractor_id,
                     url=self.url,
                     error=error)

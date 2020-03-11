@@ -1,3 +1,7 @@
 examples/other/*
 *.egg-info/
 dist/
+.coverage
+.pytest_cache/
+venv/
+.tox/
