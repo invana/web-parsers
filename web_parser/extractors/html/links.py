@@ -1,5 +1,5 @@
-from .base import ExtractorBase
-from extraction_engine.utils.url import get_urn, get_domain
+from extractors.base import ExtractorBase
+from web_parser.utils.url import get_urn, get_domain
 
 
 class AllLinksExtractor(ExtractorBase):
@@ -48,7 +48,7 @@ class ForeignDomainLinkExtractor(ExtractorBase):
 
 #
 # class PaginationLinkExtractor(ExtractorBase):
-#     def engine(self):
+#     def engines(self):
 #         data = {}
 #         extracted_data = {}
 #         for selector in self.extractor.get('data_selectors', []):

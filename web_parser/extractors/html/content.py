@@ -1,6 +1,6 @@
-from extraction_engine.extractors.base import ExtractorBase
-from extraction_engine.utils.selectors import get_selector_element
-from extraction_engine.utils.url import get_urn, get_domain
+from web_parser.extractors.base import ExtractorBase
+from web_parser.utils.selectors import get_selector_element
+from web_parser.utils.url import get_urn, get_domain
 import json
 
 

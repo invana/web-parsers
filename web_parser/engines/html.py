@@ -5,7 +5,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class ExtractionEngine(object):
+class HTMLParserEngine(object):
 
     def __init__(self, url=None, html=None, extraction_manifest=None):
         self.html = html
@@ -19,7 +19,7 @@ class ExtractionEngine(object):
         extractor_type = extractor.get("extractor_type")
         extractor_id = extractor.get("extractor_id")
         logger.info("Running extractor:'{}' on url:{}".format(extractor_id, self.url))
-        driver_klass_module = import_module(f'extraction_engine.extractors')
+        driver_klass_module = import_module(f'web_parser.extractors')
         driver_klass = getattr(driver_klass_module, extractor_type)
         if extractor_type is None:
             return {extractor_id: None}
@@ -30,10 +30,12 @@ class ExtractionEngine(object):
                                                 extractor_id=extractor_id)
                 data = extractor_object.run()
                 return data
-            except Exception as e:
-                logger.error("Failed to engine the extractor_id {} on url {} with error:".format(extractor_id,
-                                                                                                 self.url,
-                                                                                                 e))
+            except Exception as error:
+                logger.error("Failed to engines the extractor_id {extractor_id} on url {url} with error: {error}".format(
+                    extractor_id=extractor_id,
+                    url=self.url,
+                    error=error)
+                )
         return {extractor_id: None}
 
     def extract_data(self, ):

@@ -1,4 +1,4 @@
-from extraction_engine.extractors.base import ExtractorBase
+from web_parser.extractors.base import ExtractorBase
 
 
 class PythonBasedExtractor(ExtractorBase):

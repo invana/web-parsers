@@ -7,10 +7,7 @@ logger = logging.getLogger(__name__)
 
 class FieldTransformerBase(object):
     """
-
     IntField(data="1").transform()
-
-
 
     """
 

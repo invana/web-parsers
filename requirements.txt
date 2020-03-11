@@ -1,4 +1,4 @@
-certifi==2019.9.11
+certifi
 cssselect==1.1.0
 lxml==4.4.1
 parsel==1.5.2
