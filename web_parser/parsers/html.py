@@ -43,7 +43,7 @@ class HTMLParserEngine(object):
                         url=self.url,
                         error=error)
                 )
-        return {extractor_id: None}
+            return {extractor_id: None}
 
     def extract_data(self, ):
         all_extracted_data = {}

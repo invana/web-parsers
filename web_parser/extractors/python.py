@@ -1,14 +1,14 @@
-from web_parser.extractors.base import ExtractorBase
+from web_parser.extractors.base import ExtractorBase, ContentExtractorBase
 
 
-class PythonBasedExtractor(ExtractorBase):
+class PythonBasedExtractor(ContentExtractorBase):
     """
+Usage :
 
 
-    def extractor_fn(html_selector=html_selector):
-        html_content = html_selector.title
-
-        return {"data": {}, "d__d": []}
+extractor_type: PythonBasedExtractor
+extractor_id: python_extractor
+extractor_fn: 'def extractor_fn(html_selector=None): return {"html_selector": html_selector.__str__()}'
 
 
     """
@@ -16,6 +16,12 @@ class PythonBasedExtractor(ExtractorBase):
     def run(self):
         extractor_fn = self.extractor.get("extractor_fn")
         data = {}
-        if extractor_fn:
-            data[self.extractor_id] = extractor_fn(html_selector=self.html_selector)
+        global_fns = {}
+
+        exec(extractor_fn.strip(), global_fns)
+        simulate_fn = global_fns['extractor_fn']
+        try:
+            data[self.extractor_id] = simulate_fn(html_selector=self.html_selector)
+        except Exception as e:
+            data[self.extractor_id] = None
         return data
