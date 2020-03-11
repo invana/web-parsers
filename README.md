@@ -2,6 +2,11 @@
 
 Convert HTML data into cleaned JSON  using YAML configurations
 
+
+
+[![Build Status](https://travis-ci.org/invanalabs/web-parser.svg?branch=master)](https://travis-ci.org/invanalabs/web-parser)
+[![codecov](https://codecov.io/gh/invanalabs/web-parser/branch/master/graph/badge.svg)](https://codecov.io/gh/invanalabs/web-parser)
+
 ## How to install
 ```bash
 pip install -e git+https://github.com/invanalabs/web-parser.git#egg=extraction_engine
