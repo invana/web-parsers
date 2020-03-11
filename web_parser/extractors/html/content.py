@@ -153,20 +153,17 @@ class JSONLDExtractor(ExtractorBase):
 class PlainHTMLContentExtractor(ExtractorBase):
 
     def run(self):
-        data = {}
-        html_selector_text = self.html_selector.body
-        data[self.extractor_id] = html_selector_text
-        return data
+        return {self.extractor_id: self.html_selector.body}
 
 
 class FeedUrlExtractor(ExtractorBase):
     def run(self):
-        data = {}
-        data[self.extractor_id] = {}
+        data = {self.extractor_id: {}}
         data[self.extractor_id]['rss__xml'] = self.html_selector.xpath('//link[@type="application/rss+xml"]').xpath(
             "@href").extract_first()
         data[self.extractor_id]['rss__atom'] = self.html_selector.xpath('//link[@type="application/atom+xml"]').xpath(
             "@href").extract_first()
+        print(data)
         return data
 
 
@@ -176,12 +173,14 @@ class PageOverviewExtractor(ExtractorBase):
         data = {}
 
         meta_tags_data = MetaTagExtractor(
+            url=self.url,
             html_selector=self.html_selector,
             extractor=self.extractor,
             extractor_id=self.extractor_id
         ).run().get(self.extractor_id, {})
 
         paragraphs_data = ParagraphsExtractor(
+            url=self.url,
             html_selector=self.html_selector,
             extractor=self.extractor,
             extractor_id="paragraphs"
@@ -214,7 +213,7 @@ class PageOverviewExtractor(ExtractorBase):
                 meta_tags_data.get("meta__twitter__url"),
             "page_type": meta_tags_data.get("og__type"),
             "keywords": meta_tags_data.get("meta__keywords"),
-            "domain": get_domain(self.html_selector.url),
+            "domain": get_domain(self.url),
             "first_paragraph": paragraphs_data[0] if len(paragraphs_data) > 0 else None,
             "shortlink_url": self.html_selector.xpath('//link[@rel="shortlink"]').xpath("@href").extract_first(),
             "canonical_url": self.html_selector.xpath('//link[@rel="canonical"]').xpath("@href").extract_first()

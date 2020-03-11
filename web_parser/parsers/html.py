@@ -13,7 +13,6 @@ class HTMLParserEngine(object):
         self.url = url
         self.extraction_config = extraction_manifest
 
-
     def run_extractor(self, selector=None, extractor=None):
         extractor_type = extractor.get("extractor_type")
         extractor_id = extractor.get("extractor_id")
@@ -24,16 +23,18 @@ class HTMLParserEngine(object):
             return {extractor_id: None}
         else:
             try:
-                extractor_object = driver_klass(html_selector=selector,
+                extractor_object = driver_klass(url=self.url,
+                                                html_selector=selector,
                                                 extractor=extractor,
                                                 extractor_id=extractor_id)
                 data = extractor_object.run()
                 return data
             except Exception as error:
-                logger.error("Failed to parsers the extractor_id {extractor_id} on url {url} with error: {error}".format(
-                    extractor_id=extractor_id,
-                    url=self.url,
-                    error=error)
+                logger.error(
+                    "Failed to parsers the extractor_id {extractor_id} on url {url} with error: {error}".format(
+                        extractor_id=extractor_id,
+                        url=self.url,
+                        error=error)
                 )
         return {extractor_id: None}
 

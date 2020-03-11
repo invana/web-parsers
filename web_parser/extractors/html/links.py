@@ -20,6 +20,7 @@ class AllLinksAnalyticsExtractor(ExtractorBase):
     def run(self):
         data = {}
         extracted_data = AllLinksExtractor(
+            url=self.url,
             html_selector=self.html_selector,
             extractor=self.extractor,
             extractor_id="all_links"
