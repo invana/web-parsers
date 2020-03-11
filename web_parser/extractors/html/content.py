@@ -20,11 +20,11 @@ class HeadingsExtractor(ExtractorBase):
     def run(self):
         data = {}
         extracted_data = []
-        heading_tags = ["h1", "h2", "h3", "h4", "h5", "h6"]
-        elements = self.response.css(",".join(heading_tags)).extract()
+        heading_tags = ["h1", "h2", "h3", "h4", "h5", "h6", "h7"]
+        elements = self.response.css("::text,".join(heading_tags)).extract()
         for el in elements:
             extracted_data.append(el)
-        data[self.extractor_id] = [d.strip() for d in extracted_data]
+        data[self.extractor_id] = [d.strip() for d in extracted_data if d.strip()]
         return data
 
 

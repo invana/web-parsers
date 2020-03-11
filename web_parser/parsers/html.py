@@ -1,6 +1,7 @@
 from parsel import Selector
 from importlib import import_module
 import logging
+from web_parser.utils import convert_html_to_selector
 
 logger = logging.getLogger(__name__)
 
@@ -12,8 +13,6 @@ class HTMLParserEngine(object):
         self.url = url
         self.extraction_config = extraction_manifest
 
-    def convert_html_to_selector(self):
-        return Selector(self.html)
 
     def run_extractor(self, selector=None, extractor=None):
         extractor_type = extractor.get("extractor_type")
@@ -40,7 +39,7 @@ class HTMLParserEngine(object):
 
     def extract_data(self, ):
         all_extracted_data = {}
-        selector = self.convert_html_to_selector()
+        selector = convert_html_to_selector(self.html)
         for extractor in self.extraction_config:
             extracted_data = self.run_extractor(selector=selector, extractor=extractor)
             all_extracted_data.update(extracted_data)

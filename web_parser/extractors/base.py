@@ -16,7 +16,7 @@ class ExtractorBase:
         :param extractor_fn: extractor python lambda; this is optional in most cases.
         :param extractor_id: the field with which data is stored in database.
         """
-        if None in [response, extractor, extractor_id]:
+        if None in [response,  extractor_id]:
             raise Exception("Invalid input to the extractor class, response, extractor and extractor_id are mandatory")
         self.response = response
         self.extractor = extractor

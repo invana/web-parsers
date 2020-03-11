@@ -1,4 +1,9 @@
 import importlib
+from parsel import Selector
+
+
+def convert_html_to_selector(html):
+    return Selector(html)
 
 
 class SelectorExtractor(object):
