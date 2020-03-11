@@ -24,7 +24,7 @@ class HTMLParserEngine(object):
             return {extractor_id: None}
         else:
             try:
-                extractor_object = driver_klass(response=selector,
+                extractor_object = driver_klass(html_selector=selector,
                                                 extractor=extractor,
                                                 extractor_id=extractor_id)
                 data = extractor_object.run()

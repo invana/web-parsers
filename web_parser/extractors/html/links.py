@@ -6,7 +6,7 @@ class AllLinksExtractor(ExtractorBase):
     def run(self):
         data = {}
         extracted_data = []
-        links = self.response.css("a").xpath("@href").extract()
+        links = self.html_selector.css("a").xpath("@href").extract()
 
         for link in links:
             if link and not link.startswith("#"):
@@ -20,7 +20,7 @@ class AllLinksAnalyticsExtractor(ExtractorBase):
     def run(self):
         data = {}
         extracted_data = AllLinksExtractor(
-            response=self.response,
+            html_selector=self.html_selector,
             extractor=self.extractor,
             extractor_id="all_links"
         ).run().get("all_links", {})
@@ -52,7 +52,7 @@ class ForeignDomainLinkExtractor(ExtractorBase):
 #         data = {}
 #         extracted_data = {}
 #         for selector in self.extractor.get('data_selectors', []):
-#             _d = get_selector_element(self.response, selector)
+#             _d = get_selector_element(self.html_selector, selector)
 #             extracted_data[selector.get('selector_id')] = _d
 #         data[self.extractor_id] = extracted_data
 #         return data

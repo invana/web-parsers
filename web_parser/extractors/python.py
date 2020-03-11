@@ -5,8 +5,8 @@ class PythonBasedExtractor(ExtractorBase):
     """
 
 
-    def extractor_fn(response=response):
-        html_content = response.title
+    def extractor_fn(html_selector=html_selector):
+        html_content = html_selector.title
 
         return {"data": {}, "d__d": []}
 
@@ -17,5 +17,5 @@ class PythonBasedExtractor(ExtractorBase):
         extractor_fn = self.extractor.get("extractor_fn")
         data = {}
         if extractor_fn:
-            data[self.extractor_id] = extractor_fn(response=self.response)
+            data[self.extractor_id] = extractor_fn(html_selector=self.html_selector)
         return data
