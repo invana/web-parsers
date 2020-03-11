@@ -7,7 +7,12 @@ Convert HTML data into cleaned JSON  using YAML configurations
 [![Build Status](https://travis-ci.org/invanalabs/web-parser.svg?branch=master)](https://travis-ci.org/invanalabs/web-parser)
 [![codecov](https://codecov.io/gh/invanalabs/web-parser/branch/master/graph/badge.svg)](https://codecov.io/gh/invanalabs/web-parser)
 
-## How to install
+## Requirements
+
+Python 3.6+
+
+
+## Installation
 ```bash
 pip install -e git+https://github.com/invanalabs/web-parser.git#egg=web_parser
 ```
@@ -15,8 +20,6 @@ pip install -e git+https://github.com/invanalabs/web-parser.git#egg=web_parser
 ## How to use
 
 ```python
-
-
 from web_parser import HTMLParserEngine
 import yaml
 
