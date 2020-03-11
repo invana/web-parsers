@@ -1,4 +1,4 @@
-- extractor_type: MetaTagExtractor
+- extractor_type: MetaTagExtractora
 - extractor_type: CustomContentExtractor
   extractor_id: content
   data_selectors:
