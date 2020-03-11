@@ -27,7 +27,7 @@ def test_overall_web_parser_engine_failure_case():
     assert type(result) is dict
 
 
-def test_overall_web_parser_engine_failure_case2():
+def test_overall_web_parser_engine_failure_invalid_extractor_type():
     html = open("{}/tests/page.html".format(path), "r").read()
     extraction_manifest = yaml_to_json(open("{}/tests/extract-failcase2.yaml".format(path)).read())
     engine = HTMLParserEngine(html=html, url="http://localhost", extraction_manifest=extraction_manifest)
