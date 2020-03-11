@@ -9,9 +9,7 @@ install:
   - pip install -r requirements-test.txt
 
 script:
-  - pytest --cov=./ tests/
   - coverage run -m pytest --cov=./ tests/
-
 
 after_success:
   - codecov
