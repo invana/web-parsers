@@ -14,4 +14,4 @@ script:
 
 
 after_success:
-  - if [ ${TRAVIS} ]; then  codecov -t "5010d5ed-ba43-488b-afd6-996d15f8ac43";  fi
+  - codecov
