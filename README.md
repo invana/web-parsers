@@ -9,7 +9,7 @@ Convert HTML data into cleaned JSON  using YAML configurations
 
 ## How to install
 ```bash
-pip install -e git+https://github.com/invanalabs/web-parser.git#egg=extraction_engine
+pip install -e git+https://github.com/invanalabs/web-parser.git#egg=web_parser
 ```
 
 ## How to use
