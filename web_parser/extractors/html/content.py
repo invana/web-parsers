@@ -1,4 +1,4 @@
-from web_parser.extractors.base import ExtractorBase
+from web_parser.extractors.base import ExtractorBase, ContentExtractorBase
 from web_parser.utils.selectors import get_selector_element
 from web_parser.utils.url import get_urn, get_domain
 import json
@@ -79,7 +79,7 @@ class MetaTagExtractor(ExtractorBase):
         return data
 
 
-class CustomContentExtractor(ExtractorBase):
+class CustomContentExtractor(ContentExtractorBase):
 
     def run(self):
         data = {}
@@ -167,7 +167,7 @@ class FeedUrlExtractor(ExtractorBase):
         return data
 
 
-class PageOverviewExtractor(ExtractorBase):
+class PageOverviewExtractor(ContentExtractorBase):
 
     def run(self):
         data = {}

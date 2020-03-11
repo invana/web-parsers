@@ -1,0 +1,2 @@
+class InvalidExtractor(Exception):
+    pass

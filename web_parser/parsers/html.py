@@ -2,6 +2,7 @@ from parsel import Selector
 from importlib import import_module
 import logging
 from web_parser.utils import convert_html_to_selector
+from web_parser.utils.exceptions import InvalidExtractor
 
 logger = logging.getLogger(__name__)
 
@@ -23,10 +24,12 @@ class HTMLParserEngine(object):
             return {extractor_id: None}
         else:
             try:
-                extractor_object = driver_klass(url=self.url,
-                                                html_selector=selector,
-                                                extractor=extractor,
-                                                extractor_id=extractor_id)
+                extractor_object = driver_klass(
+                    url=self.url,
+                    html_selector=selector,
+                    extractor=extractor,
+                    extractor_id=extractor_id
+                )
                 data = extractor_object.run()
                 return data
             except Exception as error:
