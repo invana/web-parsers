@@ -140,13 +140,11 @@ def test_icon_extractor():
 def test_html2json_extractor():
     extraction_manifest = yaml_to_json(open("{}/tests/configs/html2json-config.yaml".format(path)).read())
 
-    print("extraction_manifest", extraction_manifest)
     result = HTML2JSONExtractor(url=url,
                                 html_selector=convert_html_to_selector(html),
                                 extractor=extraction_manifest,
                                 extractor_id="json_extractor"
                                 ).run()
-    print("=-===result", result)
     assert 'json_extractor' in result
     assert result['json_extractor'] is not None
     assert result['json_extractor']['title'] == 'Invana Knowledge Platform'
@@ -155,21 +153,11 @@ def test_html2json_extractor():
 
 def test_python_extractor():
     extraction_manifest = yaml_to_json(open("{}/tests/configs/extract-python.yaml".format(path)).read())
-
-    # def extractor_fn(html_selector=None): return {"html_selector": html_selector.__str__()}
-
-    # extraction_manifest = {
-    #     "extractor_type": "PythonBasedExtractor",
-    #     "extractor_id": "python_extractor",
-    #     "extractor_fn": extractor_fn
-    # }
-
     result = PythonBasedExtractor(url=url,
                                   html_selector=convert_html_to_selector(html),
                                   extractor=extraction_manifest,
                                   extractor_id="python_extractor"
                                   ).run()
-    print("=-===result", result)
     assert 'python_extractor' in result
     assert result['python_extractor'] is not None
     assert type(result) is dict

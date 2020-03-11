@@ -162,7 +162,6 @@ class FeedUrlExtractor(ExtractorBase):
             "@href").extract_first()
         data[self.extractor_id]['rss__atom'] = self.html_selector.xpath('//link[@type="application/atom+xml"]').xpath(
             "@href").extract_first()
-        print(data)
         return data
 
 

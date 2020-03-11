@@ -1,6 +1,8 @@
 import locale
 import re
 import logging
+import json
+import ast
 
 logger = logging.getLogger(__name__)
 
@@ -47,9 +49,9 @@ class StringField(FieldTransformerBase):
 class IntField(FieldTransformerBase):
     def get_method(self):
         def custom_int(data):
-            data = locale.atoi(data)
+            if type(data) is str:
+                data = locale.atoi(data)
             return int(data)
-
         return custom_int
 
 
@@ -66,8 +68,17 @@ class FloatField(FieldTransformerBase):
 
 
 class DictField(FieldTransformerBase):
+
+    @staticmethod
+    def dict_or_json_dump(d):
+        if type(d) == dict:
+            return d
+        elif type(d) == str:
+            return json.loads(d)
+        return d
+
     def get_method(self):
-        return dict
+        return  ast.literal_eval
 
 
 class RawField(FieldTransformerBase):
