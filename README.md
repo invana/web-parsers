@@ -24,7 +24,7 @@ html = open("page.html", "r").read()
 extraction_manifest_yaml = """
 - extractor_type: MetaTagExtractor
   extractor_id: meta_tags
-- extractor_type: CustomContentExtractor
+- extractor_type: HTML2JSONExtractor
   extractor_id: content
   data_selectors:
   - selector_id: title

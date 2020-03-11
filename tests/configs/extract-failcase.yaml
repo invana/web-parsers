@@ -1,5 +1,5 @@
 - extractor_type: MetaTagExtractor
-- extractor_type: CustomContentExtractor
+- extractor_type: HTML2JSONExtractor
   extractor_id: content
   data_selectors:
   - selector_id: title

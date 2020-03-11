@@ -1,6 +1,6 @@
 from web_parser.extractors.base import ExtractorBase, ContentExtractorBase
 from web_parser.utils.selectors import get_selector_element
-from web_parser.utils.url import get_urn, get_domain
+from web_parser.utils.url import get_urn, get_domain, get_absolute_url
 import json
 
 
@@ -16,7 +16,6 @@ class ParagraphsExtractor(ExtractorBase):
 
 
 class HeadingsExtractor(ExtractorBase):
-    # TODO - implement this
     def run(self):
         data = {}
         extracted_data = []
@@ -79,7 +78,7 @@ class MetaTagExtractor(ExtractorBase):
         return data
 
 
-class CustomContentExtractor(ContentExtractorBase):
+class HTML2JSONExtractor(ContentExtractorBase):
 
     def run(self):
         data = {}
@@ -117,7 +116,7 @@ class IconsExtractor(ExtractorBase):
 
         favicon = self.html_selector.xpath('//link[@rel="shortcut icon"]').xpath("@href").get()
         if favicon:
-            meta_data_dict['favicon'] = favicon
+            meta_data_dict['favicon'] = get_absolute_url(url=favicon, origin_url=self.url)
 
         elements = self.html_selector.xpath('//link[@rel="icon" or @rel="apple-touch-icon-precomposed"]')
         for element in elements:
@@ -153,7 +152,7 @@ class JSONLDExtractor(ExtractorBase):
 class PlainHTMLContentExtractor(ExtractorBase):
 
     def run(self):
-        return {self.extractor_id: self.html_selector.body}
+        return {self.extractor_id: self.html_selector.__str__()}
 
 
 class FeedUrlExtractor(ExtractorBase):
@@ -175,14 +174,12 @@ class PageOverviewExtractor(ContentExtractorBase):
         meta_tags_data = MetaTagExtractor(
             url=self.url,
             html_selector=self.html_selector,
-            extractor=self.extractor,
             extractor_id=self.extractor_id
         ).run().get(self.extractor_id, {})
 
         paragraphs_data = ParagraphsExtractor(
             url=self.url,
             html_selector=self.html_selector,
-            extractor=self.extractor,
             extractor_id="paragraphs"
         ).run().get("paragraphs", {})
         # TODO - clean the data, that is extracted. ex:  meta_tags_data.get("title")

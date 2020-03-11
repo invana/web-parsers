@@ -1,13 +1,13 @@
 from web_parser.parsers import HTMLParserEngine
 from web_parser.extractors import ParagraphsExtractor, PageOverviewExtractor, \
     AllLinksExtractor, AllLinksAnalyticsExtractor, JSONLDExtractor, TableContentExtractor, \
-    MetaTagExtractor, HeadingsExtractor, FeedUrlExtractor
+    MetaTagExtractor, HeadingsExtractor, FeedUrlExtractor, ImagesExtractor, PlainHTMLContentExtractor, \
+    IconsExtractor, HTML2JSONExtractor
 from web_parser.utils import yaml_to_json, convert_html_to_selector
 import os
 
 path = os.getcwd()
 html = open("{}/tests/page.html".format(path), "r").read()
-# extraction_manifest = yaml_to_json(open("{}/tests/extract.yaml".format(path)).read())
 url = "http://dummy-url.com"
 
 
@@ -102,4 +102,52 @@ def test_page_overview_extractor():
                                    ).run()
     assert 'overview_extractor' in result
     assert result['overview_extractor']['domain'] == "dummy-url.com"
+    assert type(result) is dict
+
+
+def test_image_extractor():
+    result = ImagesExtractor(url=url,
+                             html_selector=convert_html_to_selector(html),
+                             extractor_id="image_extractor"
+                             ).run()
+    assert 'image_extractor' in result
+    assert result['image_extractor'].__len__() > 0
+    assert type(result) is dict
+
+
+def test_plain_extractor():
+    result = PlainHTMLContentExtractor(url=url,
+                                       html_selector=convert_html_to_selector(html),
+                                       extractor_id="plain_extractor"
+                                       ).run()
+    assert 'plain_extractor' in result
+    assert result['plain_extractor'] is not None
+    assert type(result) is dict
+
+
+def test_icon_extractor():
+    result = IconsExtractor(url=url,
+                            html_selector=convert_html_to_selector(html),
+                            extractor_id="icon_extractor"
+                            ).run()
+    assert 'icon_extractor' in result
+    assert result['icon_extractor'] is not None
+    assert result['icon_extractor']['favicon'] is not None
+    assert result['icon_extractor']['favicon'] == "http://dummy-url.com/favicon.ico"
+    assert type(result) is dict
+
+
+def test_html2json_extractor():
+    extraction_manifest = yaml_to_json(open("{}/tests/configs/html2json-config.yaml".format(path)).read())
+
+    print("extraction_manifest", extraction_manifest)
+    result = HTML2JSONExtractor(url=url,
+                                html_selector=convert_html_to_selector(html),
+                                extractor=extraction_manifest,
+                                extractor_id="json_extractor"
+                                ).run()
+    print("=-===result", result)
+    assert 'json_extractor' in result
+    assert result['json_extractor'] is not None
+    assert result['json_extractor']['title'] == 'Invana Knowledge Platform'
     assert type(result) is dict

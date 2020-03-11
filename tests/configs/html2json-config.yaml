@@ -1,0 +1,8 @@
+extractor_type: HTML2JSONExtractor
+extractor_id: content
+data_selectors:
+- selector_id: title
+  selector: title
+  selector_type: css
+  selector_attribute: text
+  data_type: RawField
