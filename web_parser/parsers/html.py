@@ -19,8 +19,12 @@ class HTMLParserEngine(object):
         extractor_id = extractor.get("extractor_id")
         logger.info("Running extractor:'{}' on url:{}".format(extractor_id, self.url))
         driver_klass_module = import_module(f'web_parser.extractors')
-        driver_klass = getattr(driver_klass_module, extractor_type)
-        if extractor_type is None:
+        try:
+            driver_klass = getattr(driver_klass_module, extractor_type)
+        except AttributeError as e:
+            logger.error("Failed to import the extractor_type:{extractor_type}".format(extractor_type=extractor_type))
+            driver_klass = None
+        if extractor_type is None or driver_klass is None:
             return {extractor_id: None}
         else:
             try:
