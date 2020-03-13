@@ -5,7 +5,8 @@ from setuptools import setup, find_packages
 setup(
     name='web-parsers',
     version='0.0.3',
-    description='Extract data as json from html web pages using YAML configurations',
+    description='Convert HTML, XML, RDF data into JSON using YAML configurations '
+                'and occasionally with pythonic functions',
     author='Ravi Raja Merugu',
     author_email='ravi@invanalabs.ai',
     url='https://github.com/invanalabs/web-parser',
