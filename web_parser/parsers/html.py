@@ -1,4 +1,3 @@
-from parsel import Selector
 from importlib import import_module
 import logging
 from web_parser.utils import convert_html_to_selector
@@ -8,6 +7,10 @@ logger = logging.getLogger(__name__)
 
 
 class HTMLParserEngine(object):
+    """
+
+    extraction_manifest should be a list of extractors ie., `web_parser.extractors.
+    """
 
     def __init__(self, url=None, html=None, extraction_manifest=None):
         self.html = html
@@ -34,8 +37,7 @@ class HTMLParserEngine(object):
                     extractor=extractor,
                     extractor_id=extractor_id
                 )
-                data = extractor_object.run()
-                return data
+                return extractor_object.run()
             except Exception as error:
                 logger.error(
                     "Failed to parsers the extractor_id {extractor_id} on url {url} with error: {error}".format(
@@ -43,9 +45,9 @@ class HTMLParserEngine(object):
                         url=self.url,
                         error=error)
                 )
-            return {extractor_id: None}
+                return {extractor_id: None}
 
-    def extract_data(self, ):
+    def run(self, ):
         all_extracted_data = {}
         selector = convert_html_to_selector(self.html)
         for extractor in self.extraction_config:

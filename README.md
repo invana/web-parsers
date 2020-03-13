@@ -39,7 +39,7 @@ extraction_manifest_yaml = """
 extraction_manifest = yaml.load(extraction_manifest_yaml,  yaml.Loader)
 
 engine = HTMLParserEngine(html=html, extraction_manifest=extraction_manifest)
-data = engine.extract_data()
+data = engine.run()
 print (data)
 # {'meta_tags': {'meta__viewport': 'width=device-width, initial-scale=1', 'meta__google-site-verification': 'svzjE4Ll9L_SzXgYKt2YtOz6X6lYtCO0UrPDR0ZiRcM', 'title': 'Invana Knowledge Platform'}, 'content': {'title': 'Invana Knowledge Platform'}} 
 

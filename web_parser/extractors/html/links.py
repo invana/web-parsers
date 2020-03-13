@@ -35,7 +35,7 @@ class AllLinksAnalyticsExtractor(ContentExtractorBase):
                 links_data[domain] = [link]
 
         data[self.extractor_id] = [{"domain": domain, "links": domain_links, "links_count": domain_links.__len__()} for
-                                domain, domain_links in links_data.items()]
+                                   domain, domain_links in links_data.items()]
 
         return data
 
@@ -46,17 +46,6 @@ class SameDomainLinkExtractor(ExtractorBase):
 
 class ForeignDomainLinkExtractor(ExtractorBase):
     pass
-
-#
-# class PaginationLinkExtractor(ExtractorBase):
-#     def parsers(self):
-#         data = {}
-#         extracted_data = {}
-#         for selector in self.extractor.get('data_selectors', []):
-#             _d = get_selector_element(self.html_selector, selector)
-#             extracted_data[selector.get('selector_id')] = _d
-#         data[self.extractor_id] = extracted_data
-#         return data
 
 
 class CustomLinkExtractor(ExtractorBase):

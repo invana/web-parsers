@@ -3,4 +3,4 @@ from web_parser.extractors.html.links import AllLinksExtractor, AllLinksAnalytic
 from web_parser.extractors.html.content import HTML2JSONExtractor, MainContentExtractor, PageOverviewExtractor, \
     ParagraphsExtractor, HeadingsExtractor, TableContentExtractor, MetaTagExtractor, IconsExtractor, JSONLDExtractor, \
     FeedUrlExtractor, PageOverviewExtractor, PlainHTMLContentExtractor
-from .python import PythonBasedExtractor
+from .python import PythonHTMLExtractor

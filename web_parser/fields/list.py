@@ -23,7 +23,8 @@ class ListFieldTransformerBase(object):
                 result_data = self.transformer_class(data=d).transform()
                 result_data_list.append(result_data)
             except Exception as e:
-                logger.debug(e)
+                logger.debug("Failed to transform data `{d}` to `{klass_name}` type with "
+                             "error `{error}`".format(d=d, klass_name=self.__class__.__name__, error=e))
         return result_data_list
 
     def transform(self):

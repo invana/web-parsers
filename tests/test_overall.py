@@ -9,7 +9,7 @@ def test_overall_web_parser_engine():
     html = open("{}/tests/page.html".format(path), "r").read()
     extraction_manifest = yaml_to_json(open("{}/tests/configs/extract.yaml".format(path)).read())
     engine = HTMLParserEngine(html=html, url="http://localhost", extraction_manifest=extraction_manifest)
-    result = engine.extract_data()
+    result = engine.run()
     assert result['meta_tags'] is not None
     assert result['content'] is not None
     assert type(result) is dict
@@ -21,7 +21,7 @@ def test_overall_web_parser_engine_failure_case():
     html = open("{}/tests/page.html".format(path), "r").read()
     extraction_manifest = yaml_to_json(open("{}/tests/configs/extract-failcase.yaml".format(path)).read())
     engine = HTMLParserEngine(html=html, url="http://localhost", extraction_manifest=extraction_manifest)
-    result = engine.extract_data()
+    result = engine.run()
     assert "meta_tags" not in result
     assert result['content'] is not None
     assert type(result) is dict
@@ -31,7 +31,7 @@ def test_overall_web_parser_engine_failure_invalid_extractor_type():
     html = open("{}/tests/page.html".format(path), "r").read()
     extraction_manifest = yaml_to_json(open("{}/tests/configs/extract-failcase2.yaml".format(path)).read())
     engine = HTMLParserEngine(html=html, url="http://localhost", extraction_manifest=extraction_manifest)
-    result = engine.extract_data()
+    result = engine.run()
     assert "meta_tags" in result
     assert result['meta_tags'] is None
     assert result['content'] is not None
