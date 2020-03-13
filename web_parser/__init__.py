@@ -1,1 +1,1 @@
-from .parsers import HTMLParserEngine
+from .parsers import HTMLParser

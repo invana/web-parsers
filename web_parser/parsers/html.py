@@ -6,7 +6,7 @@ from web_parser.utils.exceptions import InvalidExtractor
 logger = logging.getLogger(__name__)
 
 
-class HTMLParserEngine:
+class HTMLParser:
     """
 
     extraction_manifest should be a list of extractors ie., `web_parser.extractors.

@@ -1,4 +1,4 @@
-from web_parser.parsers import HTMLParserEngine
+from web_parser.parsers import HTMLParser
 from web_parser.extractors import PythonHTMLExtractor
 from web_parser.utils import yaml_to_json, convert_html_to_selector
 import os
