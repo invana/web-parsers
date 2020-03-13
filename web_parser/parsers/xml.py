@@ -9,9 +9,3 @@ class XMLParser:
 
     def run(self):
         return json.loads(json.dumps(xd.parse(self.xml_data)))
-
-import requests
-
-xml = XMLParser(requests.get('https://invana.io/feed.xml').text).run()
-
-print(xml)
