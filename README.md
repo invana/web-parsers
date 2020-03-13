@@ -1,4 +1,4 @@
-# Extraction Engine
+# Web Parser
 
 Convert HTML, XML, RDF data into JSON using YAML configurations and occasionally with pythonic functions.
 
