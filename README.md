@@ -1,7 +1,6 @@
 # Web Parser
 
-Convert HTML, XML, RDF data into JSON using YAML configurations and occasionally with pythonic functions.
-
+Convert HTML, XML data into JSON using YAML configurations and occasionally with pythonic functions.
 
 [![Build Status](https://travis-ci.org/invanalabs/web-parser.svg?branch=master)](https://travis-ci.org/invanalabs/web-parser)
 [![codecov](https://codecov.io/gh/invanalabs/web-parser/branch/master/graph/badge.svg)](https://codecov.io/gh/invanalabs/web-parser)
