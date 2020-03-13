@@ -20,9 +20,10 @@ pip install -e git+https://github.com/invanalabs/web-parser.git#egg=web_parser
 ### HTMLParser
 ```python
 from web_parser import HTMLParser
+import urllib.request
 import yaml
 
-html = open("page.html", "r").read()
+html = urllib.request.urlopen("https://invana.io").read()
 extraction_manifest_yaml = """
 - extractor_type: MetaTagExtractor
   extractor_id: meta_tags
@@ -37,11 +38,19 @@ extraction_manifest_yaml = """
 """
 extraction_manifest = yaml.load(extraction_manifest_yaml,  yaml.Loader)
 
-engine = HTMLParser(html=html, extraction_manifest=extraction_manifest)
+engine = HTMLParser(html=html, url="http://dummy-url.com", extraction_manifest=extraction_manifest)
 data = engine.run()
 print (data)
-# {'meta_tags': {'meta__viewport': 'width=device-width, initial-scale=1', 'meta__google-site-verification': 'svzjE4Ll9L_SzXgYKt2YtOz6X6lYtCO0UrPDR0ZiRcM', 'title': 'Invana Knowledge Platform'}, 'content': {'title': 'Invana Knowledge Platform'}} 
-
+{
+    "content": {
+        "title": "Enrich your data with information available on the Internet | Invana"
+    },
+    "meta_tags": {
+        "meta__description": "Connect to your databases, microservices or data from internet and create Knowledge & Data APIs in near realtime",
+        "meta__viewport": "width=device-width, initial-scale=1",
+        "title": "Enrich your data with information available on the Internet | Invana"
+    }
+}
 ```
 
 ### XMLParser

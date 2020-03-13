@@ -15,6 +15,11 @@ class HTMLParser:
     def __init__(self, url=None, html=None, extraction_manifest=None):
         self.html = html
         self.url = url
+        if self.url is None:
+            raise Exception(
+                "url cannot be blank, as it is used to generate absolute urls in most of the cases, you can "
+                "give http://dummy-url.com as url, if you want to give a dummy url"
+            )
         self.extraction_config = extraction_manifest
 
     def run_extractor(self, selector=None, extractor=None):
