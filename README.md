@@ -18,6 +18,7 @@ pip install -e git+https://github.com/invanalabs/web-parser.git#egg=web_parser
 
 ## How to use
 
+### HTMLParser
 ```python
 from web_parser import HTMLParserEngine
 import yaml
@@ -41,5 +42,17 @@ engine = HTMLParserEngine(html=html, extraction_manifest=extraction_manifest)
 data = engine.run()
 print (data)
 # {'meta_tags': {'meta__viewport': 'width=device-width, initial-scale=1', 'meta__google-site-verification': 'svzjE4Ll9L_SzXgYKt2YtOz6X6lYtCO0UrPDR0ZiRcM', 'title': 'Invana Knowledge Platform'}, 'content': {'title': 'Invana Knowledge Platform'}} 
+
+```
+
+### XMLParser
+
+```python
+from web_parser.parsers.xml import XMLParser
+import urllib.request
+
+
+xml_data = urllib.request.urlopen("https://invana.io/feed.xml").read()
+json_data = XMLParser(xml_data).run()
 
 ```
