@@ -3,39 +3,42 @@ from web_parsers2.manifest.v1 import ExtractorManifest
 from web_parsers2.managers.html import HTMLExtractionManager
 
 elements_extraction_manifest_example = """
-headings:
-  data_type: ListDictField
-  selector_query:
-    type: css
-    value: h1
-  attributes:
-  - attribute: text
-    field_name: text
-    data_type: StringField
-  - attribute: class
-    field_name: class
-    data_type: StringField    
-  - attribute: element-id
-    field_name: data_id
-    data_type: IntField
-paragraphs:
-  data_type: ListDictField
-  selector_query:
-    type: css
-    value: p
-  attributes:
-  - attribute: text
-    field_name: text
-    data_type: StringField
-  - attribute: html
-    field_name: html
-    data_type: StringField
-  - attribute: class
-    field_name: class
-    data_type: StringField
-  - attribute: element-id
-    field_name: data_id
-    data_type: IntField
+extractor_type: CustomDataExtractor
+extractor_id: heading_paragraph
+extractor_items:
+  headings:
+    data_type: ListDictField
+    selector_query:
+      type: css
+      value: h1
+    attributes:
+    - attribute: text
+      field_name: text
+      data_type: StringField
+    - attribute: class
+      field_name: class
+      data_type: StringField    
+    - attribute: element-id
+      field_name: data_id
+      data_type: IntField
+  paragraphs:
+    data_type: ListDictField
+    selector_query:
+      type: css
+      value: p
+    attributes:
+    - attribute: text
+      field_name: text
+      data_type: StringField
+    - attribute: html
+      field_name: html
+      data_type: StringField
+    - attribute: class
+      field_name: class
+      data_type: StringField
+    - attribute: element-id
+      field_name: data_id
+      data_type: IntField
 """
 
 custom_extractor_example = """
@@ -70,7 +73,7 @@ html_string = """
 </html>
 """
 custom_extractor_example = yaml_to_json(custom_extractor_example)
-# print("custom_extractor_example", custom_extractor_example)
+elements_extraction_manifest_example = yaml_to_json(elements_extraction_manifest_example)
 extractor_manifest_by_fields = ExtractorManifest(
     title="example_manifest",
     version="v1",
@@ -80,9 +83,9 @@ extractor_manifest_by_fields = ExtractorManifest(
         "name": "Ravi Raja Merugu",
         "email": "rrmerugu@gmail.com",
         "type": "Individual"
-    }, extract_by="field",
+    }, extract_by="element",
     extractors=[
-        custom_extractor_example,
+        elements_extraction_manifest_example,
         {
             "extractor_id": "paragraphs_list",
             "extractor_type": "ParagraphExtractor",

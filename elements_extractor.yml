@@ -1,0 +1,36 @@
+extractor_type: CustomDataExtractor
+extractor_id: heading_paragraph
+extractor_items:
+  headings:
+    data_type: ListDictField
+    selector_query:
+      type: css
+      value: h1
+    attributes:
+    - attribute: text
+      field_name: text
+      data_type: StringField
+    - attribute: class
+      field_name: class
+      data_type: StringField
+    - attribute: element-id
+      field_name: data_id
+      data_type: IntField
+  paragraphs:
+    data_type: ListDictField
+    selector_query:
+      type: css
+      value: p
+    attributes:
+    - attribute: text
+      field_name: text
+      data_type: StringField
+    - attribute: html
+      field_name: html
+      data_type: StringField
+    - attribute: class
+      field_name: class
+      data_type: StringField
+    - attribute: element-id
+      field_name: data_id
+      data_type: IntField
