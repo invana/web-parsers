@@ -27,10 +27,10 @@ html = urllib.request.urlopen("https://invana.io").read()
 extraction_manifest_yaml = """
 - extractor_type: MetaTagExtractor
   extractor_id: meta_tags
-- extractor_type: HTML2JSONExtractor
+- extractor_type: DataExtractor
   extractor_id: content
-  data_selectors:
-  - selector_id: title
+  extractor_items:
+  - item_id: title
     selector: title
     selector_type: css
     selector_attribute: text
@@ -38,7 +38,7 @@ extraction_manifest_yaml = """
 """
 extraction_manifest = yaml.load(extraction_manifest_yaml,  yaml.Loader)
 
-engine = HTMLParser(html=html, url="http://dummy-url.com", extraction_manifest=extraction_manifest)
+engine = HTMLParser(html_string=html, url="http://dummy-url.com", extraction_manifest=extraction_manifest)
 data = engine.run()
 print (data)
 {

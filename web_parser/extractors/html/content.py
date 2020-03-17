@@ -78,14 +78,13 @@ class MetaTagExtractor(ExtractorBase):
         return data
 
 
-class HTML2JSONExtractor(ContentExtractorBase):
+class DataExtractor(ContentExtractorBase):
 
     def run(self):
         data = {}
         extracted_data = {}
-        for selector in self.extractor.get('data_selectors', []):
-
-            if selector.get('selector_attribute') == 'element' and len(selector.get('child_selectors', [])) > 0:
+        for selector in self.extractor.extractor_items:
+            if selector.data_attribute == 'element' and len(selector.child_selectors) > 0:
                 # TODO - currently only support multiple elements strategy. what if multiple=False
                 elements = self.html_selector.css(selector.get('selector'))
                 elements_data = []
@@ -93,17 +92,17 @@ class HTML2JSONExtractor(ContentExtractorBase):
                     datum = {}
                     for child_selector in selector.get('child_selectors', []):
                         _d = get_elements_element(el, child_selector)
-                        datum[child_selector.get('selector_id')] = _d if _d else None
+                        datum[child_selector.get('item_id')] = _d if _d else None
                     elements_data.append(datum)
                 data_type = selector.get("data_type", "RawField")
                 if data_type.startswith("List") is False:
                     single_data = elements_data[0]
-                    extracted_data[selector.get('selector_id')] = single_data
+                    extracted_data[selector.get('item_id')] = single_data
                 else:
-                    extracted_data[selector.get('selector_id')] = elements_data
+                    extracted_data[selector.get('item_id')] = elements_data
             else:
                 _d = get_elements_element(self.html_selector, selector)
-                extracted_data[selector.get('selector_id')] = _d
+                extracted_data[selector.item_id] = _d
 
         data[self.extractor_id] = extracted_data
         return data
@@ -144,7 +143,6 @@ class JSONLDExtractor(ExtractorBase):
                 extracted_data.append(element)
             except Exception as e:
                 pass
-
         data[self.extractor_id] = extracted_data
         return data
 

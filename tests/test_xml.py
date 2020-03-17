@@ -12,12 +12,13 @@ def test_xml_from_test():
     assert "rss" in json_data
 
 
-def test_xml_from_remote_url():
-    xml_data = urllib.request.urlopen("https://invana.io/feed.xml").read()
-    json_data = XMLParser(xml_data).run()
-    assert type(json_data) is dict
-    assert "rss" in json_data
-
+#
+# def test_xml_from_remote_url():
+#     xml_data = urllib.request.urlopen("https://invana.io/feed.xml").read()
+#     json_data = XMLParser(xml_data).run()
+#     assert type(json_data) is dict
+#     assert "rss" in json_data
+#
 
 def test_xml_from_test_from_string():
     # use requests.get('https://invana.io/feed.xml').text with python-requests

@@ -41,8 +41,7 @@ def clean_data(elements=None, selector=None):
     :param selector:
     :return:
     """
-    data_type = selector.get("data_type", "RawField")
-
+    data_type = selector.data_type
     if data_type.startswith("List"):
         multiple = True
     else:
@@ -58,29 +57,31 @@ def clean_data(elements=None, selector=None):
 
 
 def get_elements_element(html_element, selector):
-    if selector.get('selector_attribute') in ['text']:
-        if selector.get('selector_type') == 'css':
-            elements = html_element.css("{0}::{1}".format(selector.get('selector'),
-                                                          selector.get('selector_attribute')))
+    print("====selector", selector, )
+    item_query = selector.item_query
+    if selector.data_attribute in ['text']:
+        if item_query.get("type") == 'css':
+            elements = html_element.css("{0}::{1}".format(item_query.get('value'),
+                                                          selector.data_attribute))
             return clean_data(elements=elements, selector=selector)
         else:
-            elements = html_element.xpath("{0}/{1}".format(selector.get('selector'),
-                                                           selector.get('selector_attribute')))
+            elements = html_element.xpath("{0}/{1}".format(item_query.get('value'),
+                                                           selector.data_attribute))
             return clean_data(elements=elements, selector=selector)
-    elif selector.get('selector_attribute') == 'html':
-        if selector.get('selector_type') == 'css':
-            elements = html_element.css(selector.get('selector'))
+    elif selector.data_attribute == 'html':
+        if item_query.get('type') == 'css':
+            elements = html_element.css(item_query.get('value'))
             return clean_data(elements=elements, selector=selector)
         else:
-            elements = html_element.xpath("{0}/{1}".format(selector.get('selector'),
-                                                           selector.get('selector_attribute')))
+            elements = html_element.xpath("{0}/{1}".format(item_query.get('value'),
+                                                           selector.data_attribute))
             return clean_data(elements=elements, selector=selector)
     else:
-        if selector.get('selector_type') == 'css':
-            elements = html_element.css(selector.get('selector')) \
-                .xpath("@{0}".format(selector.get('selector_attribute')))
+        if item_query.get('type') == 'css':
+            elements = html_element.css(item_query.get('value')) \
+                .xpath("@{0}".format(selector.data_attribute))
             return clean_data(elements=elements, selector=selector)
         else:
-            elements = html_element.xpath("{0}/{1}".format(selector.get('selector'),
-                                                           selector.get('selector_attribute')))
+            elements = html_element.xpath("{0}/{1}".format(item_query.get('value'),
+                                                           selector.data_attribute))
             return clean_data(elements=elements, selector=selector)

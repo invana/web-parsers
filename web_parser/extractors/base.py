@@ -9,7 +9,7 @@ class ExtractorBase:
 
     """
 
-    def __init__(self, url=None, html_selector=None, extractor=None, extractor_id=None, **kwargs):
+    def __init__(self, url=None, html_selector=None, extractor_id=None, **kwargs):
         """
         :param html_selector: html html_selector of the request
         :param extractor_id: the field with which data is stored in database.
