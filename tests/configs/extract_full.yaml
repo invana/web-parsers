@@ -1,0 +1,24 @@
+- extractor_type: MetaTagExtractor
+  extractor_id: meta_tags
+- extractor_type: DataExtractor
+  extractor_id: content
+  extractor_items:
+  - item_id: form_fields
+    item_query:
+      type: css
+      value: form .form-group
+    data_attribute: element
+    data_type: ListDictField
+    child_selectors:
+      - item_id: label
+        item_query:
+          type: css
+          value: label
+        data_attribute: text
+        data_type: StringField
+      - item_id: input_id
+        item_query:
+          type: css
+          value: input,textarea
+        data_attribute: id
+        data_type: StringField

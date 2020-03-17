@@ -8,11 +8,16 @@ extractor_classes = import_module(f'web_parser.extractors')
 
 class ExtractorItemManifest:
 
-    def __init__(self, item_id=None, data_type="RawField", item_query=None, data_attribute=None):
+    def __init__(self, item_id=None, data_type="RawField", item_query=None,
+                 data_attribute=None, child_selectors=None):
         self.item_id = item_id
         self.data_type = data_type
         self.item_query = item_query
         self.data_attribute = data_attribute
+        if child_selectors:
+            self.child_selectors = [ExtractorItemManifest(**child_selector) for child_selector in child_selectors]
+        else:
+            self.child_selectors = []
 
     def __repr__(self):
         return "<ExtractorItemManifest data_type='{data_type}' " \

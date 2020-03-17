@@ -83,26 +83,27 @@ class DataExtractor(ContentExtractorBase):
     def run(self):
         data = {}
         extracted_data = {}
-        for selector in self.extractor.extractor_items:
-            if selector.data_attribute == 'element' and len(selector.child_selectors) > 0:
+        for extractor_item in self.extractor.extractor_items:
+            if extractor_item.data_attribute == 'element' and extractor_item.child_selectors.__len__() > 0:
                 # TODO - currently only support multiple elements strategy. what if multiple=False
-                elements = self.html_selector.css(selector.get('selector'))
+                # review this; not sure if this is still applicable.
+                elements = self.html_selector.css(extractor_item.item_query.get("value"))
                 elements_data = []
                 for el in elements:
                     datum = {}
-                    for child_selector in selector.get('child_selectors', []):
+                    for child_selector in extractor_item.child_selectors:
                         _d = get_elements_element(el, child_selector)
-                        datum[child_selector.get('item_id')] = _d if _d else None
+                        datum[child_selector.item_id] = _d if _d else None
                     elements_data.append(datum)
-                data_type = selector.get("data_type", "RawField")
+                data_type = extractor_item.data_type
                 if data_type.startswith("List") is False:
                     single_data = elements_data[0]
-                    extracted_data[selector.get('item_id')] = single_data
+                    extracted_data[extractor_item.item_id] = single_data
                 else:
-                    extracted_data[selector.get('item_id')] = elements_data
+                    extracted_data[extractor_item.item_id] = elements_data
             else:
-                _d = get_elements_element(self.html_selector, selector)
-                extracted_data[selector.item_id] = _d
+                _d = get_elements_element(self.html_selector, extractor_item)
+                extracted_data[extractor_item.item_id] = _d
 
         data[self.extractor_id] = extracted_data
         return data

@@ -6,7 +6,7 @@ from web_parser.manifest import HTMLExtractionManifest
 
 path = os.getcwd()
 html = open("{}/tests/page.html".format(path), "r").read()
-extraction_manifest = yaml_to_json(open("{}/tests/configs/extract_v1.yaml".format(path)).read())
+extraction_manifest = yaml_to_json(open("{}/tests/configs/extract_full.yaml".format(path)).read())
 
 manifest = HTMLExtractionManifest(
     title="invana.io blogs",
