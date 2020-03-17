@@ -26,17 +26,17 @@ class HTMLParser:
         extractor_type = extractor.get("extractor_type")
         extractor_id = extractor.get("extractor_id")
         logger.info("Running extractor:'{}' on url:{}".format(extractor_id, self.url))
-        driver_klass_module = import_module(f'web_parser.extractors')
+        extractors_module = import_module(f'web_parser.extractors')
         try:
-            driver_klass = getattr(driver_klass_module, extractor_type)
+            extractor_cls = getattr(extractors_module, extractor_type)
         except AttributeError as e:
             logger.error("Failed to import the extractor_type:{extractor_type}".format(extractor_type=extractor_type))
-            driver_klass = None
-        if extractor_type is None or driver_klass is None:
+            extractor_cls = None
+        if extractor_type is None or extractor_cls is None:
             return {extractor_id: None}
         else:
             try:
-                extractor_object = driver_klass(
+                extractor_object = extractor_cls(
                     url=self.url,
                     html_selector=selector,
                     extractor=extractor,
