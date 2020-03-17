@@ -2,6 +2,7 @@ from web_parser.extractors import ParagraphsExtractor, PageOverviewExtractor, \
     AllLinksExtractor, AllLinksAnalyticsExtractor, JSONLDExtractor, TableContentExtractor, \
     MetaTagExtractor, HeadingsExtractor, FeedUrlExtractor, ImagesExtractor, PlainHTMLContentExtractor, \
     IconsExtractor, DataExtractor
+from web_parser.manifest.v1 import ExtractorManifest
 from web_parser.utils import yaml_to_json, convert_html_to_selector
 import os
 
@@ -11,7 +12,8 @@ url = "http://dummy-url.com"
 
 
 def test_paragraphs_extractor():
-    engine = ParagraphsExtractor(url=url, html_selector=convert_html_to_selector(html),
+    engine = ParagraphsExtractor(url=url,
+                                 html_selector=convert_html_to_selector(html),
                                  extractor_id="paragraphs_extractor")
     result = engine.run()
     assert result['paragraphs_extractor'] is not None
@@ -138,10 +140,10 @@ def test_icon_extractor():
 
 def test_html2json_extractor():
     extraction_manifest = yaml_to_json(open("{}/tests/configs/html2json-config.yaml".format(path)).read())
-
+    manifest = ExtractorManifest(**extraction_manifest)
     result = DataExtractor(url=url,
                                 html_selector=convert_html_to_selector(html),
-                                extractor=extraction_manifest,
+                                extractor=manifest,
                                 extractor_id="json_extractor"
                                 ).run()
     assert 'json_extractor' in result

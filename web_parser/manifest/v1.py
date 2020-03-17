@@ -42,13 +42,11 @@ class ExtractorManifest:
         try:
             extractor_cls = getattr(extractor_classes, extractor_type)
         except AttributeError as e:
-            logger.error("Failed to import the extractor_type:{extractor_type} with error {error{".format(
+            logger.error("Failed to import the extractor_type:{extractor_type} with error {error}".format(
                 extractor_type=extractor_type,
                 error=e
             ))
-            raise InvalidExtractor({"message": "There is no {} extractor_type in the standard extractors".format(
-                self.extractor_type
-            )})
+            extractor_cls = None
         self.extractor_cls = extractor_cls
         self.extractor_id = extractor_id
         if extractor_items:

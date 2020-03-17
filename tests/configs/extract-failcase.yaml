@@ -3,7 +3,8 @@
   extractor_id: content
   extractor_items:
   - item_id: title
-    selector: title
-    selector_type: css
-    selector_attribute: text
+    item_query:
+      type: css
+      value: title
+    data_attribute: text
     data_type: RawField

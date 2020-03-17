@@ -32,16 +32,16 @@ def transform_data(data=None, data_type=None):
     return data
 
 
-def clean_data(elements=None, selector=None):
+def clean_data(elements=None, items_extractor=None):
     """
 
     This is where are the extracted data will be cleaned up and applied functions and data types as needed.
 
     :param elements:
-    :param selector:
+    :param items_extractor:
     :return:
     """
-    data_type = selector.data_type
+    data_type = items_extractor.data_type
     if data_type.startswith("List"):
         multiple = True
     else:
@@ -56,32 +56,31 @@ def clean_data(elements=None, selector=None):
     return data
 
 
-def get_elements_element(html_element, selector):
-    print("====selector", selector, )
-    item_query = selector.item_query
-    if selector.data_attribute in ['text']:
+def get_elements_element(html_element, items_extractor):
+    item_query = items_extractor.item_query
+    if items_extractor.data_attribute in ['text']:
         if item_query.get("type") == 'css':
             elements = html_element.css("{0}::{1}".format(item_query.get('value'),
-                                                          selector.data_attribute))
-            return clean_data(elements=elements, selector=selector)
+                                                          items_extractor.data_attribute))
+            return clean_data(elements=elements, items_extractor=items_extractor)
         else:
             elements = html_element.xpath("{0}/{1}".format(item_query.get('value'),
-                                                           selector.data_attribute))
-            return clean_data(elements=elements, selector=selector)
-    elif selector.data_attribute == 'html':
+                                                           items_extractor.data_attribute))
+            return clean_data(elements=elements, items_extractor=items_extractor)
+    elif items_extractor.data_attribute == 'html':
         if item_query.get('type') == 'css':
             elements = html_element.css(item_query.get('value'))
-            return clean_data(elements=elements, selector=selector)
+            return clean_data(elements=elements, items_extractor=items_extractor)
         else:
             elements = html_element.xpath("{0}/{1}".format(item_query.get('value'),
-                                                           selector.data_attribute))
-            return clean_data(elements=elements, selector=selector)
+                                                           items_extractor.data_attribute))
+            return clean_data(elements=elements, items_extractor=items_extractor)
     else:
         if item_query.get('type') == 'css':
             elements = html_element.css(item_query.get('value')) \
-                .xpath("@{0}".format(selector.data_attribute))
-            return clean_data(elements=elements, selector=selector)
+                .xpath("@{0}".format(items_extractor.data_attribute))
+            return clean_data(elements=elements, items_extractor=items_extractor)
         else:
             elements = html_element.xpath("{0}/{1}".format(item_query.get('value'),
-                                                           selector.data_attribute))
-            return clean_data(elements=elements, selector=selector)
+                                                           items_extractor.data_attribute))
+            return clean_data(elements=elements, items_extractor=items_extractor)
