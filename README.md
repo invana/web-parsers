@@ -33,8 +33,8 @@ extraction_manifest_yaml = """
   extractor_items:
   - item_id: title
     item_query: 
-      type: title
-      value: css
+      type: css
+      value: title
     data_attribute: text
     data_type: StringField
 """
@@ -66,6 +66,15 @@ print(data)
         "meta__viewport": "width=device-width, initial-scale=1",
         "title": "Enrich your data with information available on the Internet | Invana"
     }
+}
+
+data = engine.run(flatten_extractors=True)
+print(data)
+{
+    "title": "Enrich your data with information available on the Internet | Invana",
+    "meta__description": "Connect to your databases, microservices or data from internet and create Knowledge & Data APIs in near realtime",
+    "meta__viewport": "width=device-width, initial-scale=1",
+    "title": "Enrich your data with information available on the Internet | Invana"
 }
 ```
 

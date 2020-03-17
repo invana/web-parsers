@@ -45,10 +45,19 @@ class HTMLParser:
             )
             return {extractor_id: None}
 
-    def run(self):
+    @staticmethod
+    def flatten_extracted_data(all_extracted_data):
+        all_extracted_data_new = {}
+        for k, v in all_extracted_data.items():
+            all_extracted_data_new.update(v)
+        return all_extracted_data_new
+
+    def run(self, flatten_extractors=False):
         all_extracted_data = {}
         selector = convert_html_to_selector(self.html_string)
         for extractor in self.extraction_manifest.extractors:
             extracted_data = self.run_extractor(selector=selector, extractor=extractor)
             all_extracted_data.update(extracted_data)
+        if flatten_extractors is True:
+            return self.flatten_extracted_data(all_extracted_data)
         return all_extracted_data
