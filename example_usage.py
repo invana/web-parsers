@@ -61,6 +61,10 @@ html_string = """
 <body>
 <h1 class="title" element-id="1">Hello World</h1>
 <p element-id="2">This is the first paragraph</p>
+<p element-id="3">This is the first three</p>
+<p element-id="4">This is the first four</p>
+<p element-id="5">This is the first five</p>
+<p element-id="6">This is the first six</p>
 
 </body>
 </html>

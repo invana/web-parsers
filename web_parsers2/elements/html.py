@@ -31,8 +31,7 @@ class HTMLElement:
 
     @staticmethod
     def transform_attribute_data_type(data_type=None, data=None):
-        print("data====", data)
-        data_transformer_cls = getattr(fields_klass_module, data_type)
+        data_transformer_cls = getattr(fields_klass_module,  data_type.lstrip("List"))
         return data_transformer_cls(data).transform()
 
     def extract_attribute(self, attribute=None):
@@ -82,16 +81,15 @@ class HTMLElement:
         :param attributes_manifest: list of extractor
         :return:
         """
+        data = None
         if attributes_manifest.__class__.__name__ == "ExtractorManifestByElement":
             data = self.extract_attributes_from_manifest(attributes=attributes_manifest.attributes)
-            return ExtractedItem(_id=self.element, field_name=attributes_manifest.field_name, data=data)
         elif attributes_manifest.__class__.__name__ == "ExtractorManifestByField":
             data = self.extract_attribute_from_manifest(
                 data_type=attributes_manifest.data_type,
                 data_attribute=attributes_manifest.data_attribute
             )
-            print("=====", data)
-            return ExtractedItem(_id=self.element, field_name=attributes_manifest.field_name, data=data)
+        return ExtractedItem(_id=self.element, field_name=attributes_manifest.field_name, data=data)
 
 
 class HTMLElementSelector:
@@ -100,7 +98,6 @@ class HTMLElementSelector:
         self.selector_query = selector_query
         self.url = url
         self.elements = self.get_selector(document)
-        print("=====self.elements", self.elements)
 
     def get_selector(self, document):
         if self.selector_query.get("type") == "css":
@@ -126,14 +123,10 @@ class HTMLElementSelector:
         :param element_manifest: of type ExtractorManifestByElement
         :return:
         """
-        print("element_manifest", element_manifest)
-        print("sele.elements", self.elements)
-
         if "List" in element_manifest.data_type:
             data = []
             for element in self.elements:
                 item = self.extract_from_element(element, element_manifest)
-                print("=====item", item.get_dict())
                 data.append(item)
             return data
         else:

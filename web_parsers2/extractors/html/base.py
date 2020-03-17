@@ -65,7 +65,6 @@ class DataExtractorBase:
                 return data
             return self.convert_to_json(data)
         else:
-            print("====self.manifest>>>>>>>", self.manifest)
             elements = HTMLElementSelector(
                 self.html_tree,
                 selector_query=self.manifest.extractor_cls.manifest.selector_query

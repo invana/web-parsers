@@ -8,3 +8,4 @@ venv/
 coverage.xml
 experiments/
 .idea/
+__pycache__/
