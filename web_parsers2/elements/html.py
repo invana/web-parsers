@@ -120,18 +120,30 @@ class HTMLElementSelector:
         self.html_tree = html_tree
         self.url = url
 
-    def get_element_by_css(self, css):
+    def get_elements_by_css(self, css):
         xpath = GenericTranslator().css_to_xpath(css)
+        return self.get_elements_by_xpath(xpath)
+
+    def get_elements_by_xpath(self, xpath):
         return self.html_tree.xpath(xpath)
 
-    def get_element_by_xpath(self, xpath):
-        return self.html_tree.xpath(xpath)
+    def get_element_by_tag(self, tag):
+        raise NotImplementedError()
+
+    def get_element_by_partial_text(self, tag):
+        raise NotImplementedError()
+
+    def find_element_by_link_text(self, tag):
+        raise NotImplementedError()
+
+    def find_element_by_text(self, tag):
+        raise NotImplementedError()
 
     def get_elements(self, selector_type="css", selector_value=None):
         if selector_type == "css":
-            elements = self.get_element_by_css(selector_value)
+            elements = self.get_elements_by_css(selector_value)
         else:
-            elements = self.get_element_by_xpath(selector_value)
+            elements = self.get_elements_by_xpath(selector_value)
         return [HTMLElement(element=element) for element in elements]
 
     def extract(self, elements,
@@ -146,6 +158,7 @@ class HTMLElementSelector:
 
         :param element_extractor_manifest: of type ExtractorManifestByElement
         :param elements: html elements
+
         :return:
         """
         if "List" in element_extractor_manifest.data_type:
@@ -153,6 +166,7 @@ class HTMLElementSelector:
             for element in elements:
                 item = element.extract(attributes_manifest=element_extractor_manifest)
                 data.append(item)
+
             return data
         else:
             if elements and elements.__len__() > 0:
