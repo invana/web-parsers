@@ -20,10 +20,11 @@ pip install -e git+https://github.com/invanalabs/web-parser.git#egg=web_parser
 ### HTMLParser
 ```python
 from web_parser import HTMLParser
+from web_parser.manifest import HTMLExtractionManifest
 import urllib.request
 import yaml
 
-html = urllib.request.urlopen("https://invana.io").read()
+html_string = urllib.request.urlopen("https://invana.io").read().decode("utf-8")
 extraction_manifest_yaml = """
 - extractor_type: MetaTagExtractor
   extractor_id: meta_tags
@@ -31,16 +32,31 @@ extraction_manifest_yaml = """
   extractor_id: content
   extractor_items:
   - item_id: title
-    selector: title
-    selector_type: css
-    selector_attribute: text
-    data_type: RawField
+    item_query: 
+      type: title
+      value: css
+    data_attribute: text
+    data_type: StringField
 """
-extraction_manifest = yaml.load(extraction_manifest_yaml,  yaml.Loader)
+extraction_manifest = yaml.load(extraction_manifest_yaml, yaml.Loader)
 
-engine = HTMLParser(html_string=html, url="http://dummy-url.com", extraction_manifest=extraction_manifest)
+manifest = HTMLExtractionManifest(
+    title="invana.io blogs",
+    domain="invana.io",
+    version="beta",
+    test_urls="https://invana.io/blogs",
+    owner={
+        "title": "Ravi Raja Merugu",
+        "ownership_type": "Individual",
+        "email": "rrmerugu@gmail.com",
+        "website_url": "https://rrmerugu.github.io"
+    },
+    extractors=extraction_manifest
+)
+
+engine = HTMLParser(html_string=html_string, url="http://dummy-url.com", extraction_manifest=manifest)
 data = engine.run()
-print (data)
+print(data)
 {
     "content": {
         "title": "Enrich your data with information available on the Internet | Invana"

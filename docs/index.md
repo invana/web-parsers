@@ -2,4 +2,3 @@
 
 
 
-Manifest => ExtractorManager => Extractor
