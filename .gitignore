@@ -7,3 +7,4 @@ venv/
 .tox/
 coverage.xml
 experiments/
+.idea/
