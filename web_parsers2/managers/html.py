@@ -24,7 +24,8 @@ class HTMLExtractionManager:
     def run_extractor(self, single_extractor_manifest=None, return_json=None):
         return single_extractor_manifest.extractor_cls(
             html_tree=self.html_tree,
-            manifest=single_extractor_manifest
+            manifest=single_extractor_manifest,
+            extractor_id= single_extractor_manifest.extractor_id
         ).extract(json=return_json)
 
     def run_extractors(self, return_json=True):

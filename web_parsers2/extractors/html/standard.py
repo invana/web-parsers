@@ -50,18 +50,26 @@ class LinksExtractor(CustomDataExtractor):
 class TableExtractor(DataExtractorBase):
 
     def _extract(self):
-        if self.manifest.extractor_items:
-            data = {}
-            for extraction_field, field_manifest in self.manifest.extractor_items.items():
-                html_selector = HTMLElementSelector(
-                    self.html_tree,
-                    selector_query=field_manifest.selector_query
-                )
-                data[extraction_field] = html_selector.extract(element_manifest=field_manifest)
-            return data
-        else:
-            html_selector = HTMLElementSelector(
-                self.html_tree,
-                selector_query=self.manifest.extractor_cls.manifest.selector_query
-            )
-            return html_selector.extract(element_manifest=self.manifest.extractor_cls.manifest)
+
+        html_selector = HTMLElementSelector(
+            self.html_tree,
+        )
+        elements = html_selector.get_elements(
+            selector_type="css",
+            selector_value="table",
+        )
+        print("elements", elements)
+
+        data = {}
+        tables = []
+        for table_element in elements:
+            print("table_element", table_element)
+            # table_data = []
+            # table_headers = [th.extract() for th in table_element.css("thead tr th::text")]
+            # for row in table_element.css("tbody tr"):
+            #     row_data = [td.extract() for td in row.css("td::text")]
+            #     row_dict = dict(zip(table_headers, row_data))
+            #     table_data.append(row_dict)
+            # tables.append(table_data)
+        data[self.extractor_id] = tables
+        return data

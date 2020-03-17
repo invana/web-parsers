@@ -9,18 +9,17 @@ class CustomDataExtractor(DataExtractorBase):
             for extraction_field, field_extractor_manifest in self.manifest.extractor_items.items():
                 html_selector = HTMLElementSelector(
                     self.html_tree,
-                    selector_query=field_extractor_manifest.selector_query
                 )
                 elements = html_selector.get_elements(
                     selector_type=field_extractor_manifest.selector_query.get("type"),
                     selector_value=field_extractor_manifest.selector_query.get("value"),
                 )
-                data[extraction_field] = html_selector.extract(elements, element_extractor_manifest=field_extractor_manifest)
+                data[extraction_field] = html_selector.extract(elements,
+                                                               element_extractor_manifest=field_extractor_manifest)
             return data
         else:
             html_selector = HTMLElementSelector(
                 self.html_tree,
-                selector_query=self.manifest.extractor_cls.manifest.selector_query
             )
             elements = html_selector.get_elements(
                 selector_type=self.manifest.extractor_cls.manifest.selector_query.get("type"),

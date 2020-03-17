@@ -93,7 +93,6 @@ class HTMLElement:
 
 
 class HTMLElementSelector:
-
     """
 
     Usage:
@@ -107,7 +106,6 @@ class HTMLElementSelector:
 
         html_selector = HTMLElementSelector(
             self.html_tree,
-            selector_query=selector_query
         )
         elements = html_selector.get_elements(
             selector_type=selector_query.get("type"),
@@ -118,9 +116,8 @@ class HTMLElementSelector:
 
     """
 
-    def __init__(self, html_tree, url=None, selector_query=None):
+    def __init__(self, html_tree, url=None):
         self.html_tree = html_tree
-        self.selector_query = selector_query
         self.url = url
 
     def get_element_by_css(self, css):
@@ -135,14 +132,11 @@ class HTMLElementSelector:
             elements = self.get_element_by_css(selector_value)
         else:
             elements = self.get_element_by_xpath(selector_value)
-        return elements
+        return [HTMLElement(element=element) for element in elements]
 
-    @staticmethod
-    def extract_from_element(element, manifest):
-        return HTMLElement(element=element). \
-            extract(attributes_manifest=manifest)
-
-    def extract(self, elements,  element_extractor_manifest=None):
+    def extract(self, elements,
+                # data_type=None, selector_query=None, data_attribute=None, attributes=None
+                element_extractor_manifest=None):
         """
 
         Usage:
@@ -157,14 +151,13 @@ class HTMLElementSelector:
         if "List" in element_extractor_manifest.data_type:
             data = []
             for element in elements:
-                item = self.extract_from_element(element, element_extractor_manifest)
+                item = element.extract(attributes_manifest=element_extractor_manifest)
                 data.append(item)
             return data
         else:
-            # TODO - need to write exceptions if elements length is zero
             if elements and elements.__len__() > 0:
                 element = elements[0]
-                item = self.extract_from_element(element, element_extractor_manifest)
+                item = element.extract(attributes_manifest=element_extractor_manifest)
                 return item
             else:
                 return None

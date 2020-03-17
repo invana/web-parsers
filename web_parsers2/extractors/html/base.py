@@ -7,7 +7,10 @@ class DataExtractorBase:
     def __init__(self,
                  html_tree=None,
                  html_string=None,
-                 manifest=None):
+                 extractor_id=None,
+                 manifest=None
+
+                 ):
         """
 
 
@@ -26,7 +29,7 @@ class DataExtractorBase:
             self.html_tree = convert_string_to_html_tree(html_string)
         if manifest:
             self.manifest = manifest
-
+        self.extractor_id = extractor_id
         if self.manifest is None:
             raise Exception("Invalid manifest {}".format(self.manifest))
 

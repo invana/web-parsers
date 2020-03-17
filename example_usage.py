@@ -137,10 +137,10 @@ extractor_manifest_by_fields = ExtractorManifest(
             "extractor_id": "links",
             "extractor_type": "LinksExtractor",
         },
-        # {
-        #     "extractor_id": "tables",
-        #     "extractor_type": "TableExtractor",
-        # }
+        {
+            "extractor_id": "tables",
+            "extractor_type": "TableExtractor",
+        }
     ]
 )
 
