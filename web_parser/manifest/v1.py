@@ -1,6 +1,5 @@
 from importlib import import_module
 import logging
-from web_parser.utils.exceptions import InvalidExtractor
 
 logger = logging.getLogger(__name__)
 extractor_classes = import_module(f'web_parser.extractors')
