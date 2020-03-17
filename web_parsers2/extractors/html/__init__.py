@@ -1,2 +1,2 @@
 from .custom import CustomDataExtractor
-from .standard import ParagraphExtractor
+from .standard import ParagraphExtractor, HeadingsExtractor, ImagesExtractor, LinksExtractor, TableExtractor

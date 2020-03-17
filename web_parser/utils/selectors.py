@@ -57,7 +57,7 @@ def clean_data(elements=None, selector=None):
     return data
 
 
-def get_selector_element(html_element, selector):
+def get_elements_element(html_element, selector):
     if selector.get('selector_attribute') in ['text']:
         if selector.get('selector_type') == 'css':
             elements = html_element.css("{0}::{1}".format(selector.get('selector'),

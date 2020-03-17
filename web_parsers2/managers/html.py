@@ -3,10 +3,16 @@ from web_parsers2.utils.html import convert_string_to_html_tree
 
 class HTMLExtractionManager:
 
-    def __init__(self, html_string=None, html_tree=None, url=None, extraction_manifest=None):
+    def __init__(self, html_string=None, html_tree=None, url=None, generate_absolute_urls=True,
+                 extraction_manifest=None):
         if html_tree and html_string:
             raise Exception("html_tree and html_string cannot be used at the same time, this will"
                             "create unnecessary behaviour")
+        if generate_absolute_urls is True and url is None:
+            raise Exception("when generate_absolute_urls=True, provide the url from which content is"
+                            " extracted, so that, we can create absolute urls")
+        elif generate_absolute_urls is False and url is not None:
+            raise Exception("when generate_absolute_urls=False, url will not be used to create absolute urls")
 
         if html_tree:
             self.html_tree = html_tree

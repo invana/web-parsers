@@ -1,5 +1,5 @@
 from web_parser.extractors.base import ExtractorBase, ContentExtractorBase
-from web_parser.utils.selectors import get_selector_element
+from web_parser.utils.selectors import get_elements_element
 from web_parser.utils.url import get_urn, get_domain, get_absolute_url
 import json
 
@@ -92,7 +92,7 @@ class HTML2JSONExtractor(ContentExtractorBase):
                 for el in elements:
                     datum = {}
                     for child_selector in selector.get('child_selectors', []):
-                        _d = get_selector_element(el, child_selector)
+                        _d = get_elements_element(el, child_selector)
                         datum[child_selector.get('selector_id')] = _d if _d else None
                     elements_data.append(datum)
                 data_type = selector.get("data_type", "RawField")
@@ -102,7 +102,7 @@ class HTML2JSONExtractor(ContentExtractorBase):
                 else:
                     extracted_data[selector.get('selector_id')] = elements_data
             else:
-                _d = get_selector_element(self.html_selector, selector)
+                _d = get_elements_element(self.html_selector, selector)
                 extracted_data[selector.get('selector_id')] = _d
 
         data[self.extractor_id] = extracted_data

@@ -31,7 +31,7 @@ class HTMLElement:
 
     @staticmethod
     def transform_attribute_data_type(data_type=None, data=None):
-        data_transformer_cls = getattr(fields_klass_module,  data_type.lstrip("List"))
+        data_transformer_cls = getattr(fields_klass_module, data_type.lstrip("List"))
         return data_transformer_cls(data).transform()
 
     def extract_attribute(self, attribute=None):
@@ -94,44 +94,77 @@ class HTMLElement:
 
 class HTMLElementSelector:
 
-    def __init__(self, document, url=None, selector_query=None):
+    """
+
+    Usage:
+
+        from web_parsers2.manifest.v1 import ExtractorManifestByField
+
+        selector_query = {"type":"css", "value": "h1"}
+        element_extractor_manifest = ExtractorManifestByField( **{ 'data_type':'ListStringField',
+        'selector_query':{'type': 'css', 'value': 'a'},
+        'data_attribute':'href' }>
+
+        html_selector = HTMLElementSelector(
+            self.html_tree,
+            selector_query=selector_query
+        )
+        elements = html_selector.get_elements(
+            selector_type=selector_query.get("type"),
+            selector_value=selector_query.get("value"),
+        )
+        return html_selector.extract(elements, element_extractor_manifest=element_extractor_manifest)
+
+
+    """
+
+    def __init__(self, html_tree, url=None, selector_query=None):
+        self.html_tree = html_tree
         self.selector_query = selector_query
         self.url = url
-        self.elements = self.get_selector(document)
 
-    def get_selector(self, document):
-        if self.selector_query.get("type") == "css":
-            xpath = GenericTranslator().css_to_xpath(self.selector_query.get("value"))
+    def get_element_by_css(self, css):
+        xpath = GenericTranslator().css_to_xpath(css)
+        return self.html_tree.xpath(xpath)
+
+    def get_element_by_xpath(self, xpath):
+        return self.html_tree.xpath(xpath)
+
+    def get_elements(self, selector_type="css", selector_value=None):
+        if selector_type == "css":
+            elements = self.get_element_by_css(selector_value)
         else:
-            xpath = self.selector_query.get("value")
-        return document.xpath(xpath)
+            elements = self.get_element_by_xpath(selector_value)
+        return elements
 
-    def extract_from_element(self, element, manifest):
+    @staticmethod
+    def extract_from_element(element, manifest):
         return HTMLElement(element=element). \
             extract(attributes_manifest=manifest)
 
-    def extract(self, element_manifest=None):
+    def extract(self, elements,  element_extractor_manifest=None):
         """
 
         Usage:
 
-        element_manifest = [
-            {'attribute': 'text', 'field_name': 'text', 'data_type': 'StringField'},
-            {'attribute': 'data-id', 'field_name': 'text', 'data_type': 'StringField'}
-        ]
+        element_extractor_manifest =  <ExtractorManifestByField data_type='ListStringField'
+        selector_query='{'type': 'css', 'value': 'a'}' data_attribute='href' >
 
-        :param element_manifest: of type ExtractorManifestByElement
+        :param element_extractor_manifest: of type ExtractorManifestByElement
+        :param elements: html elements
         :return:
         """
-        if "List" in element_manifest.data_type:
+        if "List" in element_extractor_manifest.data_type:
             data = []
-            for element in self.elements:
-                item = self.extract_from_element(element, element_manifest)
+            for element in elements:
+                item = self.extract_from_element(element, element_extractor_manifest)
                 data.append(item)
             return data
         else:
             # TODO - need to write exceptions if elements length is zero
-            element = self.elements[0]
-            item = self.extract_from_element(element, element_manifest)
-            return item
-
+            if elements and elements.__len__() > 0:
+                element = elements[0]
+                item = self.extract_from_element(element, element_extractor_manifest)
+                return item
+            else:
+                return None
