@@ -51,17 +51,30 @@ code {
 }
 
 .bg-primary {
-    background-color: #333 !important;
+    background-color: #1971c2 !important;
 }
 
 .bg-primary .dropdown-menu {
-    background-color: #333 !important;
+    background-color: #1971c2 !important;
     padding: 0;
 }
 
 .navbar {
     padding: 0.2rem 1rem !important;
 }
-#navbar-brand{
+
+.navbar-dark .navbar-brand{
     font-weight: bold !important;
+}
+
+a {
+    color: #222222;
+}
+
+a:hover {
+    color: #222222;
+}
+
+.nav-link.active {
+    font-weight: bold;
 }
