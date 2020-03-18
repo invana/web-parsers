@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url>
+     <loc>https://github.com/invanalabs/web-parser/</loc>
+     <lastmod>2020-03-18</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://github.com/invanalabs/web-parser/tutorials/html-extractor/</loc>
+     <lastmod>2020-03-18</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://github.com/invanalabs/web-parser/tutorials/xml-extractor/</loc>
+     <lastmod>2020-03-18</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://github.com/invanalabs/web-parser/manifest/</loc>
+     <lastmod>2020-03-18</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+</urlset>
