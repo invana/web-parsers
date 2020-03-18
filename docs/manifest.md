@@ -207,9 +207,7 @@ The full configuration would look like this,
 ## 2. Types of Data types
 
 Each `field_id`, should be assigned a data type, so that the data will be saved in the format, that can 
-be used for indexing the data. 
-
-Valid data types are :
+be used for indexing the data. Valid data types are :
 
 1. RawField
 2. ListRawField
