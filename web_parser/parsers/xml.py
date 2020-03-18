@@ -6,9 +6,6 @@ from lxml import etree
 class XMLParser:
     """
 
-
-
-
     """
     parsed_xml_data = None
 
