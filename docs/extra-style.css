@@ -1,0 +1,52 @@
+h2 {
+    font-size: 24px !important;
+}
+
+h3 {
+    font-size: 20px !important;
+}
+
+pre code {
+    padding: 8px !important;
+    line-height: 1.2rem !important;
+}
+
+h1, h2, h3 {
+    font-weight: 400;
+    margin-top: 20px;
+    line-height: 40px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: bold;
+}
+
+body {
+    font-size: 14px;
+    line-height: 1.628571429;
+}
+
+code {
+    font-size: 12px !important;
+}
+
+.bs-sidebar .nav > .active > a, .bs-sidebar .nav > .active:hover > a {
+    font-weight: normal !important;
+    /*background-color: #eee;*/
+    display: block;
+    padding: 5px 20px;
+    z-index: 1;
+}
+
+.bg-primary {
+    background-color: #333 !important;
+}
+
+.bg-primary .dropdown-menu {
+    background-color: #333 !important;
+    padding: 0rem 0;
+}
+
+.navbar {
+    padding: 0.2rem 1rem !important;
+}
