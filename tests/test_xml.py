@@ -1,64 +1,91 @@
 from web_parser.parsers.xml import XMLParser
 import os
 import urllib.request
+from web_parser.utils.other import yaml_to_json, generate_random_id
+
+path = os.getcwd()
 
 
-def test_xml_from_test():
-    # use requests.get('https://invana.io/feed.xml').text with python-requests
-    path = os.getcwd()
+def test_xml_to_json():
     xml_data = open("{}/tests/xml/feed.xml".format(path)).read()
-    json_data = XMLParser(xml_data).run()
+    json_data = XMLParser(xml_data).to_dict()
     assert type(json_data) is dict
     assert "rss" in json_data
 
 
-#
-# def test_xml_from_remote_url():
-#     xml_data = urllib.request.urlopen("https://invana.io/feed.xml").read()
-#     json_data = XMLParser(xml_data).run()
-#     assert type(json_data) is dict
-#     assert "rss" in json_data
-#
+def test_xml_extractor_with_manifest():
+    xml_data = open("{}/tests/xml/feed.xml".format(path)).read().encode("utf-8")
 
-def test_xml_from_test_from_string():
-    # use requests.get('https://invana.io/feed.xml').text with python-requests
-    xml_data = """<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-    <channel>
-        <title>Enrich your data with information available on the Internet | Invana</title>
-        <description>Connect to your databases, microservices or data from internet and create Knowledge &amp; Data APIs
-            in near realtime
-        </description>
-        <link>https://invana.io</link>
-        <atom:link href="https://invana.io/feed.xml" rel="self" type="application/rss+xml"/>
+    xml_extractor_yml = """
+    - extractor_type: XML2JSONExtractor
+      extractor_id: channel_info
+      extractor_fields:
+      - field_id: channel
+        element_query:
+          type: xpath
+          value: '/rss/channel'
+        data_attribute: element
+        data_type: DictField
+        child_selectors:
+          - field_id: title
+            element_query:
+              type: xpath
+              value: title
+            data_attribute: text
+            data_type: StringField
+          - field_id: description
+            element_query:
+              type: xpath
+              value: description
+            data_attribute: text
+            data_type: StringField
+      - field_id: pages
+        element_query:
+          type: xpath
+          value: '/rss/channel/item'
+        data_attribute: element
+        data_type: ListDictField
+        child_selectors:
+          - field_id: title
+            element_query:
+              type: xpath
+              value: title
+            data_attribute: text
+            data_type: StringField
+          - field_id: description
+            element_query:
+              type: xpath
+              value: description
+            data_attribute: text
+            data_type: StringField
+          - field_id: link
+            element_query:
+              type: xpath
+              value: link
+            data_attribute: text
+            data_type: StringField
+          - field_id: guid
+            element_query:
+              type: xpath
+              value: guid
+            data_attribute: text
+            data_type: StringField
+          - field_id: is_perma_link
+            element_query:
+              type: xpath
+              value: guid
+            data_attribute: isPermaLink
+            data_type: StringField
 
-        <item>
-            <title>Enrich your data with information available on the Internet | Invana</title>
-            <description>Connect to your databases, microservices or data from internet and create Knowledge &amp; Data
-                APIs in near realtime
-            </description>
-            <link>/</link>
-            <guid isPermaLink="true">https://invana.io/</guid>
-        </item>
 
-        <item>
-            <title>Blog - Updates and stories | Invana</title>
-            <description>Official blog of Invana</description>
-            <link>/blog</link>
-            <guid isPermaLink="true">https://invana.io/blog</guid>
-        </item>
+    """
+    xml_extractor_manifest = yaml_to_json(xml_extractor_yml)
 
-        <item>
-            <title>Hello World!</title>
-            <description>
-            </description>
-            <pubDate>2020-01-22T09:25:20+0000</pubDate>
-            <link>https://invana.io/blog/hello-world.html</link>
-            <guid isPermaLink="true">https://invana.io/blog/hello-world.html</guid>
-        </item>
-
-    </channel>
-</rss>"""
-    json_data = XMLParser(xml_data).run()
-    assert type(json_data) is dict
-    assert "rss" in json_data
+    xml_parser = XMLParser(xml_data=xml_data, extractor_manifest=xml_extractor_manifest)
+    result = xml_parser.run_extractors()
+    assert type(result) is dict
+    assert "channel_info" in result
+    result = xml_parser.run_extractors(flatten_extractors=True)
+    assert "channel" in result
+    assert "pages" in result
+    assert result['channel'] is not None

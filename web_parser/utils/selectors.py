@@ -41,6 +41,8 @@ def clean_data(elements=None, items_extractor=None):
     :param items_extractor:
     :return:
     """
+
+    # TODO - list is calculated
     data_type = items_extractor.data_type
     if data_type.startswith("List"):
         multiple = True
