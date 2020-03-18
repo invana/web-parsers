@@ -1,6 +1,6 @@
 # Web Parser
 
-Simple, extendable HTML and XML data extraction engine using YAML configurations and some times pythonic extractors.
+Simple, extendable HTML and XML data extraction engine using YAML configurations and some times pythonic functions.
 
 The idea behind this library is to build standard configuration based or python based extractors
 that can be used for extracting data from web data like HTML or XML. 
