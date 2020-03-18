@@ -7,11 +7,11 @@ extractor_classes = import_module(f'web_parser.extractors')
 
 class ExtractorItemManifest:
 
-    def __init__(self, item_id=None, data_type="RawField", item_query=None,
+    def __init__(self, field_id=None, data_type="RawField", element_query=None,
                  data_attribute=None, child_selectors=None):
-        self.item_id = item_id
+        self.field_id = field_id
         self.data_type = data_type
-        self.item_query = item_query
+        self.element_query = element_query
         self.data_attribute = data_attribute
         if child_selectors:
             self.child_selectors = [ExtractorItemManifest(**child_selector) for child_selector in child_selectors]
@@ -20,15 +20,15 @@ class ExtractorItemManifest:
 
     def __repr__(self):
         return "<ExtractorItemManifest data_type='{data_type}' " \
-               "item_query='{item_query}' " \
+               "element_query='{element_query}' " \
                "data_attribute='{data_attribute}' " \
-               ">".format(data_type=self.data_type, item_query=self.item_query,
+               ">".format(data_type=self.data_type, element_query=self.element_query,
                           data_attribute=self.data_attribute)
 
     def to_dict(self):
         return {
-            "item_id": self.item_id,
-            "item_query": self.item_query,
+            "field_id": self.field_id,
+            "element_query": self.element_query,
             "data_type": self.data_type,
             "data_attribute": self.data_attribute
         }
@@ -36,7 +36,7 @@ class ExtractorItemManifest:
 
 class ExtractorManifest:
 
-    def __init__(self, extractor_type=None, extractor_id=None, extractor_items=None):
+    def __init__(self, extractor_type=None, extractor_id=None, extractor_fields=None):
         self.extractor_type = extractor_type
         try:
             extractor_cls = getattr(extractor_classes, extractor_type)
@@ -48,22 +48,22 @@ class ExtractorManifest:
             extractor_cls = None
         self.extractor_cls = extractor_cls
         self.extractor_id = extractor_id
-        if extractor_items:
-            self.extractor_items = [ExtractorItemManifest(**item_manifest) for item_manifest in extractor_items]
+        if extractor_fields:
+            self.extractor_fields = [ExtractorItemManifest(**item_manifest) for item_manifest in extractor_fields]
         else:
-            self.extractor_items = None
+            self.extractor_fields = None
 
     def to_dict(self):
         return {
             "extractor_type": self.extractor_type,
             "extractor_id": self.extractor_id,
-            "extractor_items": self.extractor_items,
+            "extractor_fields": self.extractor_fields,
         }
 
     def __repr__(self):
         return "<ExtractorManifest extractor_id=\"{extractor_id}\" " \
-               "extractor_items=\"{extractor_items}\" >".format(extractor_id=self.extractor_id,
-                                                                extractor_items=self.extractor_items)
+               "extractor_fields=\"{extractor_fields}\" >".format(extractor_id=self.extractor_id,
+                                                                extractor_fields=self.extractor_fields)
 
 
 class Owner:

@@ -11,11 +11,11 @@ import yaml
 
 html_string = urllib.request.urlopen("https://invana.io").read().decode("utf-8")
 extraction_manifest_yaml = """
-- extractor_type: DataExtractor
+- extractor_type: CustomDataExtractor
   extractor_id: content
-  extractor_items:
-  - item_id: title
-    item_query: 
+  extractor_fields:
+  - field_id: title
+    element_query: 
       type: css
       value: title
     data_attribute: text
@@ -58,24 +58,24 @@ import yaml
 
 html_string = urllib.request.urlopen("https://invana.io/use-cases.html").read().decode("utf-8")
 extraction_manifest_yaml = """
-- extractor_type: DataExtractor
+- extractor_type: CustomDataExtractor
   extractor_id: content
-  extractor_items:
-  - item_id: use_cases
-    item_query:
+  extractor_fields:
+  - field_id: use_cases
+    element_query:
       type: css
       value: .card-body
     data_attribute: element
     data_type: ListDictField
     child_selectors:
-      - item_id: heading
-        item_query:
+      - field_id: heading
+        element_query:
           type: css
           value: h3
         data_attribute: text
         data_type: StringField
-      - item_id: body
-        item_query:
+      - field_id: body
+        element_query:
           type: css
           value: p
         data_attribute: text

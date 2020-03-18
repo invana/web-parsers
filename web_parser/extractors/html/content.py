@@ -78,32 +78,32 @@ class MetaTagExtractor(ExtractorBase):
         return data
 
 
-class DataExtractor(ContentExtractorBase):
+class CustomDataExtractor(ContentExtractorBase):
 
     def run(self):
         data = {}
         extracted_data = {}
-        for extractor_item in self.extractor.extractor_items:
+        for extractor_item in self.extractor.extractor_fields:
             if extractor_item.data_attribute == 'element' and extractor_item.child_selectors.__len__() > 0:
                 # TODO - currently only support multiple elements strategy. what if multiple=False
                 # review this; not sure if this is still applicable.
-                elements = self.html_selector.css(extractor_item.item_query.get("value"))
+                elements = self.html_selector.css(extractor_item.element_query.get("value"))
                 elements_data = []
                 for el in elements:
                     datum = {}
                     for child_selector in extractor_item.child_selectors:
                         _d = get_elements_element(el, child_selector)
-                        datum[child_selector.item_id] = _d if _d else None
+                        datum[child_selector.field_id] = _d if _d else None
                     elements_data.append(datum)
                 data_type = extractor_item.data_type
                 if data_type.startswith("List") is False:
                     single_data = elements_data[0]
-                    extracted_data[extractor_item.item_id] = single_data
+                    extracted_data[extractor_item.field_id] = single_data
                 else:
-                    extracted_data[extractor_item.item_id] = elements_data
+                    extracted_data[extractor_item.field_id] = elements_data
             else:
                 _d = get_elements_element(self.html_selector, extractor_item)
-                extracted_data[extractor_item.item_id] = _d
+                extracted_data[extractor_item.field_id] = _d
 
         data[self.extractor_id] = extracted_data
         return data

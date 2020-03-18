@@ -1,11 +1,8 @@
 # Web Parser
 
-
-
 ## Introduction
 
-Web Parser lets you convert HTML, XML data into JSON using YAML configurations and occasionally with 
-pythonic functions.
+Simple, extendable HTML and XML data extraction engine using YAML configurations and some times pythonic extractors.
 
 
 ## Requirements
@@ -24,11 +21,11 @@ import yaml
 
 html_string = urllib.request.urlopen("https://invana.io").read().decode("utf-8")
 extraction_manifest_yaml = """
-- extractor_type: DataExtractor
+- extractor_type: CustomDataExtractor
   extractor_id: content
-  extractor_items:
-  - item_id: title
-    item_query: 
+  extractor_fields:
+  - field_id: title
+    element_query: 
       type: css
       value: title
     data_attribute: text

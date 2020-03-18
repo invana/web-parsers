@@ -57,30 +57,30 @@ def clean_data(elements=None, items_extractor=None):
 
 
 def get_elements_element(html_element, items_extractor):
-    item_query = items_extractor.item_query
+    element_query = items_extractor.element_query
     if items_extractor.data_attribute in ['text']:
-        if item_query.get("type") == 'css':
-            elements = html_element.css("{0}::{1}".format(item_query.get('value'),
+        if element_query.get("type") == 'css':
+            elements = html_element.css("{0}::{1}".format(element_query.get('value'),
                                                           items_extractor.data_attribute))
             return clean_data(elements=elements, items_extractor=items_extractor)
         else:
-            elements = html_element.xpath("{0}/{1}".format(item_query.get('value'),
+            elements = html_element.xpath("{0}/{1}".format(element_query.get('value'),
                                                            items_extractor.data_attribute))
             return clean_data(elements=elements, items_extractor=items_extractor)
     elif items_extractor.data_attribute == 'html':
-        if item_query.get('type') == 'css':
-            elements = html_element.css(item_query.get('value'))
+        if element_query.get('type') == 'css':
+            elements = html_element.css(element_query.get('value'))
             return clean_data(elements=elements, items_extractor=items_extractor)
         else:
-            elements = html_element.xpath("{0}/{1}".format(item_query.get('value'),
+            elements = html_element.xpath("{0}/{1}".format(element_query.get('value'),
                                                            items_extractor.data_attribute))
             return clean_data(elements=elements, items_extractor=items_extractor)
     else:
-        if item_query.get('type') == 'css':
-            elements = html_element.css(item_query.get('value')) \
+        if element_query.get('type') == 'css':
+            elements = html_element.css(element_query.get('value')) \
                 .xpath("@{0}".format(items_extractor.data_attribute))
             return clean_data(elements=elements, items_extractor=items_extractor)
         else:
-            elements = html_element.xpath("{0}/{1}".format(item_query.get('value'),
+            elements = html_element.xpath("{0}/{1}".format(element_query.get('value'),
                                                            items_extractor.data_attribute))
             return clean_data(elements=elements, items_extractor=items_extractor)

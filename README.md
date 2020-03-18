@@ -1,6 +1,11 @@
 # Web Parser
 
-Convert HTML, XML data into JSON using YAML configurations and occasionally with pythonic functions.
+Simple, extendable HTML and XML data extraction engine using YAML configurations and some times pythonic extractors.
+
+The idea behind this library is to build standard configuration based or python based extractors
+that can be used for extracting data from web data like HTML or XML. 
+
+This library can let users write extractors for once site and reuse it with similar site and soon etc.
 
 [![Build Status](https://travis-ci.org/invanalabs/web-parser.svg?branch=master)](https://travis-ci.org/invanalabs/web-parser)
 [![codecov](https://codecov.io/gh/invanalabs/web-parser/branch/master/graph/badge.svg)](https://codecov.io/gh/invanalabs/web-parser)
@@ -28,11 +33,11 @@ html_string = urllib.request.urlopen("https://invana.io").read().decode("utf-8")
 extraction_manifest_yaml = """
 - extractor_type: MetaTagExtractor
   extractor_id: meta_tags
-- extractor_type: DataExtractor
+- extractor_type: CustomDataExtractor
   extractor_id: content
-  extractor_items:
-  - item_id: title
-    item_query: 
+  extractor_fields:
+  - field_id: title
+    element_query: 
       type: css
       value: title
     data_attribute: text

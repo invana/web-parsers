@@ -1,10 +1,10 @@
 - extractor_type: MetaTagExtractor2
   extractor_id: meta_tags
-- extractor_type: DataExtractor
+- extractor_type: CustomDataExtractor
   extractor_id: content
-  extractor_items:
-  - item_id: title
-    item_query:
+  extractor_fields:
+  - field_id: title
+    element_query:
       type: css
       value: title
     data_attribute: text

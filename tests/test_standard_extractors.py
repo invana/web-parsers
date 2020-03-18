@@ -1,7 +1,7 @@
 from web_parser.extractors import ParagraphsExtractor, PageOverviewExtractor, \
     AllLinksExtractor, AllLinksAnalyticsExtractor, JSONLDExtractor, TableContentExtractor, \
     MetaTagExtractor, HeadingsExtractor, FeedUrlExtractor, ImagesExtractor, PlainHTMLContentExtractor, \
-    IconsExtractor, DataExtractor
+    IconsExtractor, CustomDataExtractor
 from web_parser.manifest.v1 import ExtractorManifest
 from web_parser.utils import yaml_to_json, convert_html_to_selector
 import os
@@ -141,7 +141,7 @@ def test_icon_extractor():
 def test_html2json_extractor():
     extraction_manifest = yaml_to_json(open("{}/tests/configs/html2json-config.yaml".format(path)).read())
     manifest = ExtractorManifest(**extraction_manifest)
-    result = DataExtractor(url=url,
+    result = CustomDataExtractor(url=url,
                                 html_selector=convert_html_to_selector(html),
                                 extractor=manifest,
                                 extractor_id="json_extractor"
