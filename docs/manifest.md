@@ -7,9 +7,9 @@ extract data from HTML/XML.
 ## Example Usage
 
 ```python
-from web_parser.manifest.v1 import HTMLExtractionManifest
+from manifest.alpha import WebParserManifest
 
-manifest = HTMLExtractionManifest(
+manifest = WebParserManifest(
     title="invana.io blogs",
     domain="invana.io",
     version="beta",

@@ -1,1 +1,1 @@
-from .v1 import HTMLExtractionManifest
+from .common import WebParserManifest

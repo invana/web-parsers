@@ -1,7 +1,7 @@
 from web_parser.parsers import HTMLParser
 from web_parser.utils import yaml_to_json
 import os
-from web_parser.manifest import HTMLExtractionManifest
+from web_parser.manifest import WebParserManifest
 import pytest
 
 path = os.getcwd()
@@ -10,7 +10,7 @@ path = os.getcwd()
 def test_overall_web_parser_engine():
     html = open("{}/tests/page.html".format(path), "r").read()
     extraction_manifest = yaml_to_json(open("{}/tests/configs/extract.yaml".format(path)).read())
-    manifest = HTMLExtractionManifest(extractors=extraction_manifest)
+    manifest = WebParserManifest(extractors=extraction_manifest)
     engine = HTMLParser(html_string=html, url="http://localhost", extraction_manifest=manifest)
     result = engine.run()
     assert result['meta_tags'] is not None
@@ -24,7 +24,7 @@ def test_overall_web_parser_engine_with_dictionaries():
     extraction_manifest = yaml_to_json(open("{}/tests/configs/extract_full.yaml".format(path)).read())
     html = open("{}/tests/page.html".format(path), "r").read()
 
-    manifest = HTMLExtractionManifest(
+    manifest = WebParserManifest(
         title="invana.io blogs",
         domain="invana.io",
         version="beta",
@@ -51,7 +51,7 @@ def test_overall_web_parser_engine_with_dictionaries():
 def test_overall_web_parser_engine_failure_case():
     html = open("{}/tests/page.html".format(path), "r").read()
     extraction_manifest = yaml_to_json(open("{}/tests/configs/extract-failcase.yaml".format(path)).read())
-    manifest = HTMLExtractionManifest(extractors=extraction_manifest)
+    manifest = WebParserManifest(extractors=extraction_manifest)
     engine = HTMLParser(html_string=html, url="http://localhost", extraction_manifest=manifest)
     result = engine.run()
     assert "meta_tags" not in result
@@ -62,7 +62,7 @@ def test_overall_web_parser_engine_failure_case():
 def test_overall_web_parser_engine_failure_invalid_extractor_type():
     html = open("{}/tests/page.html".format(path), "r").read()
     extraction_manifest = yaml_to_json(open("{}/tests/configs/extract-failcase2.yaml".format(path)).read())
-    manifest = HTMLExtractionManifest(extractors=extraction_manifest)
+    manifest = WebParserManifest(extractors=extraction_manifest)
     engine = HTMLParser(html_string=html, url="http://localhost", extraction_manifest=manifest)
 
     result = engine.run()

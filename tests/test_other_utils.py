@@ -11,4 +11,4 @@ def test_yaml_to_json():
     path = os.getcwd()
     a = yaml_to_json(open("{}/tests/configs/extract-python.yaml".format(path)).read())
     assert type(a) is dict
-    assert a['extractor_type'] == "PythonHTMLExtractor"
+    assert a['extractor_type'] == "PythonExtractorManifest"

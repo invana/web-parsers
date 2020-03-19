@@ -5,7 +5,7 @@
 ## Regular data extractor
 ```python
 from web_parser import HTMLParser
-from web_parser.manifest import HTMLExtractionManifest
+from web_parser.manifest import WebParserManifest
 import urllib.request
 import yaml
 
@@ -23,7 +23,7 @@ extraction_manifest_yaml = """
 """
 extraction_manifest = yaml.load(extraction_manifest_yaml, yaml.Loader)
 
-manifest = HTMLExtractionManifest(
+manifest = WebParserManifest(
     title="invana.io blogs",
     domain="invana.io",
     version="beta",
@@ -52,7 +52,7 @@ data = engine.run(flatten_extractors=True) # this will remove the `content` whic
 ```python
 
 from web_parser import HTMLParser
-from web_parser.manifest import HTMLExtractionManifest
+from web_parser.manifest import WebParserManifest
 import urllib.request
 import yaml
 
@@ -83,7 +83,7 @@ extraction_manifest_yaml = """
 """
 extraction_manifest = yaml.load(extraction_manifest_yaml, yaml.Loader)
 
-manifest = HTMLExtractionManifest(
+manifest = WebParserManifest(
     title="invana.io blogs",
     domain="invana.io",
     version="beta",
