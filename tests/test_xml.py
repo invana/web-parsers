@@ -2,7 +2,7 @@ from web_parsers.parsers.xml import XMLParser
 import os
 import urllib.request
 from web_parsers.utils.other import yaml_to_json, generate_random_id
-
+from web_parsers.manifest import WebParserManifest
 path = os.getcwd()
 
 
@@ -81,7 +81,22 @@ def test_xml_extractor_with_manifest():
     """
     xml_extractor_manifest = yaml_to_json(xml_extractor_yml)
 
-    xml_parser = XMLParser(xml_data=xml_data, extractor_manifest=xml_extractor_manifest)
+    manifest = WebParserManifest(
+        title="invana.io blogs",
+        domain="invana.io",
+        version="alpha",
+        test_urls=["https://invana.io/feed.xml", ],
+        parser_type="xml",
+        owner={
+            "title": "Ravi Raja Merugu",
+            "ownership_type": "Individual",
+            "email": "rrmerugu@gmail.com",
+            "website_url": "https://rrmerugu.github.io"
+        },
+        extractors=xml_extractor_manifest
+    )
+
+    xml_parser = XMLParser(xml_data=xml_data, extractor_manifest=manifest)
     result = xml_parser.run_extractors()
     assert type(result) is dict
     assert "channel_info" in result

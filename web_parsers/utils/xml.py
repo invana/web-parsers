@@ -17,7 +17,8 @@ def get_node_text(node):
 def get_node_html(node):
     return etree.tostring(node, pretty_print=False)
 
-def extract_from_field(node, extractor_config):
+
+def extract_xml_field(node, extractor_config):
     child_node = node.xpath(extractor_config.element_query.get("value").lstrip("/"))[0]
     if extractor_config.data_attribute == "text":
         return get_node_text(child_node)
