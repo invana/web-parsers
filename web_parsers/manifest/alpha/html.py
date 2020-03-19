@@ -1,6 +1,6 @@
 from importlib import import_module
 import logging
-from ..items import ItemManifest
+from ..items import FieldManifest
 
 logger = logging.getLogger(__name__)
 extractor_classes = import_module(f'web_parsers.extractors.html')
@@ -21,7 +21,7 @@ class HTMLExtractorManifest:
         self.extractor_cls = extractor_cls
         self.extractor_id = extractor_id
         if extractor_fields:
-            self.extractor_fields = [ItemManifest(**item_manifest) for item_manifest in
+            self.extractor_fields = [FieldManifest(**item_manifest) for item_manifest in
                                      extractor_fields]
         else:
             self.extractor_fields = None

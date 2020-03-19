@@ -4,6 +4,12 @@ from web_parsers.utils.xml import extract_xml_field, get_nodes
 
 class CustomDataExtractor(ContentExtractorBase):
 
+    @staticmethod
+    def flatten_data(data=None):
+        if data is None:
+            return data
+        return data.values[0]
+
     def run(self):
         extractor_fields = self.extractor.extractor_fields
         extracted_data = {}

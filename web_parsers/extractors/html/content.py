@@ -80,6 +80,12 @@ class MetaTagExtractor(ExtractorBase):
 
 class CustomDataExtractor(ContentExtractorBase):
 
+    @staticmethod
+    def flatten_data(data=None):
+        if data is None:
+            return data
+        return data.values[0]
+
     def run(self):
         data = {}
         extracted_data = {}
@@ -104,6 +110,8 @@ class CustomDataExtractor(ContentExtractorBase):
             else:
                 _d = get_elements_element(self.html_selector, extractor_item)
                 extracted_data[extractor_item.field_id] = _d
+            if extractor_item.flatten_data is True:
+                extracted_data[extractor_item.field_id] = self.flatten_data(extracted_data[extractor_item.field_id])
 
         data[self.extractor_id] = extracted_data
         return data

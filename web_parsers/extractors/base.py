@@ -26,12 +26,12 @@ class ExtractorBase:
         self.html_selector = html_selector
         self.extractor_id = extractor_id
 
+    def run(self):
+        raise NotImplementedError()
+
 
 class ContentExtractorBase(ExtractorBase):
     """
-
-        :param extractor: extractor configuration in json; this is optional in most cases.
-        # :param extractor_fn: extractor python lambda; this is optional in most cases.
 
     """
 
