@@ -1,10 +1,10 @@
 site_name: Web Parsers
-site_url: https://github.com/invanalabs/web-parser
+site_url: https://github.com/invanalabs/web_parsers
 site_description: Web Parsers lets you convert HTML, XML data into JSON using YAML configurations and occasionally with
   pythonic functions.
 theme: yeti
 extra_css: [extra-style.css]
-repo_url: https://github.com/invanalabs/web-parser
+repo_url: https://github.com/invanalabs/web_parsers
 
 nav:
 - Home: index.md

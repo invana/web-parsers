@@ -9,7 +9,7 @@ setup(
                 'and some times pythonic functions.',
     author='Ravi Raja Merugu',
     author_email='ravi@invanalabs.ai',
-    url='https://github.com/invanalabs/web-parser',
+    url='https://github.com/invanalabs/web_parsers',
     packages=find_packages(
         exclude=("dist", "docs", "tests",)
     ),
