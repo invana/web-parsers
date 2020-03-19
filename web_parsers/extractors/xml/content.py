@@ -55,4 +55,4 @@ class CustomDataExtractor(ContentExtractorBase):
                     )
                     self.add_to_field(field_data=field_data, extractor_field=extractor_field)
 
-        return self.extracted_data
+        return {self.extractor_id: self.extracted_data}

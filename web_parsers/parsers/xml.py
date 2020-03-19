@@ -2,18 +2,19 @@ import xmltodict as xd
 import json
 from web_parsers.utils.xml import get_nodes, parse_xml, get_node_text, get_node_html
 import logging
+from .base import ParserBase
 
 logger = logging.getLogger(__name__)
 
 
-class XMLParser:
+class XMLParser(ParserBase):
     """
 from web_parsers.parsers.xml import XMLParser
 from web_parsers.utils.other import yaml_to_json, generate_random_id
 import pprint
 import urllib.request
 
-xml_data = urllib.request.urlopen("https://invana.io/feed.xml").read()
+string_data = urllib.request.urlopen("https://invana.io/feed.xml").read()
 
 xml_extractor_yml = \"""
 - extractor_type: CustomDataExtractor
@@ -78,7 +79,7 @@ xml_extractor_yml = \"""
 \"""
 xml_extractor_manifest = yaml_to_json(xml_extractor_yml)
 
-xml_parser = XMLParser(xml_data=xml_data, extractor_manifest=xml_extractor_manifest)
+xml_parser = XMLParser(string_data=string_data, extractor_manifest=xml_extractor_manifest)
 
 # usage 1
 result = xml_parser.run_extractors(flatten_extractors=True)
@@ -88,53 +89,14 @@ result = to_dict()
 
 
     """
-    parsed_xml_data = None
-
-    def __init__(self, xml_data, url=None, extractor_manifest=None):
-        self.xml_data = xml_data
-        self.url = url
-        self.extractor_manifest = extractor_manifest
+    selector_key = "html_selector"
 
     def to_dict(self):
-        return json.loads(json.dumps(xd.parse(self.xml_data)))
+        return json.loads(json.dumps(xd.parse(self.string_data)))
 
-    def run_extractor(self, xml_tree=None, extractor=None):
-        extractor_id = extractor.extractor_id
-        logger.info("Running extractor:'{}' on url:{}".format(extractor_id, self.url))
-        try:
-            extractor_object = extractor.extractor_cls(
-                url=self.url,
-                html_selector=xml_tree,
-                extractor=extractor,
-                extractor_id=extractor_id
-            )
-            return extractor_object.run()
-        except Exception as error:
-            logger.error(
-                "Failed to extract data from  the extractor '{extractor_id}:{extractor_type}' on url "
-                "'{url}' with error: '{error}'".format(
-                    extractor_id=extractor_id,
-                    extractor_type=extractor.extractor_type,
-                    url=self.url,
-                    error=error)
-            )
-            return {extractor_id: None}
-
-    @staticmethod
-    def flatten_extracted_data(all_extracted_data):
-        all_extracted_data_new = {}
-        for k, v in all_extracted_data.items():
-            all_extracted_data_new.update(v)
-        return all_extracted_data_new
-
-    def run_extractors(self, flatten_extractors=False):
-        xml_tree = parse_xml(self.xml_data)
-
-        all_extracted_data = {}
-        for extractor in self.extractor_manifest.extractors:
-            extracted_data = self.run_extractor(extractor=extractor, xml_tree=xml_tree)
-            all_extracted_data[extractor.extractor_id] = extracted_data
-
-        if flatten_extractors is True:
-            return self.flatten_extracted_data(all_extracted_data)
-        return all_extracted_data
+    def parse_data(self, string_data):
+        """
+        this function will be used to convert html/xml tree.
+        :return:
+        """
+        return parse_xml(string_data)

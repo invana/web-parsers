@@ -29,7 +29,7 @@ from web_parsers.manifest import WebParserManifest
 import urllib.request
 import yaml
 
-html_string = urllib.request.urlopen("https://invana.io").read().decode("utf-8")
+string_data = urllib.request.urlopen("https://invana.io").read().decode("utf-8")
 extraction_manifest_yaml = """
 - extractor_type: MetaTagExtractor
   extractor_id: meta_tags
@@ -59,8 +59,8 @@ manifest = WebParserManifest(
     extractors=extraction_manifest
 )
 
-engine = HTMLParser(html_string=html_string, url="http://dummy-url.com", extraction_manifest=manifest)
-data = engine.run()
+engine = HTMLParser(string_data=string_data, url="http://dummy-url.com", extractor_manifest=manifest)
+data = engine.run_extractors()
 print(data)
 {
     "content": {
@@ -73,7 +73,7 @@ print(data)
     }
 }
 
-data = engine.run(flatten_extractors=True)
+data =  engine.run_extractors(flatten_extractors=True)
 print(data)
 {
     "title": "Enrich your data with information available on the Internet | Invana",
@@ -92,7 +92,7 @@ from web_parsers.utils.other import yaml_to_json, generate_random_id
 import pprint
 import urllib.request
 
-xml_data = urllib.request.urlopen("https://invana.io/feed.xml").read()
+string_data = urllib.request.urlopen("https://invana.io/feed.xml").read()
 
 xml_extractor_yml = """
 - extractor_type: CustomDataExtractor
@@ -176,7 +176,7 @@ manifest = WebParserManifest(
 
 
 
-xml_parser = XMLParser(xml_data=xml_data, extractor_manifest=manifest)
+xml_parser = XMLParser(string_data=string_data, extractor_manifest=manifest)
 result = xml_parser.run_extractors(flatten_extractors=True)
 pprint.pprint( result)
 {'channel': {'description': 'Connect to your databases, microservices or data '

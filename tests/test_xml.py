@@ -7,14 +7,14 @@ path = os.getcwd()
 
 
 def test_xml_to_json():
-    xml_data = open("{}/tests/xml/feed.xml".format(path)).read()
-    json_data = XMLParser(xml_data).to_dict()
+    string_data = open("{}/tests/xml/feed.xml".format(path)).read()
+    json_data = XMLParser(string_data).to_dict()
     assert type(json_data) is dict
     assert "rss" in json_data
 
 
 def test_xml_extractor_with_manifest():
-    xml_data = open("{}/tests/xml/feed.xml".format(path)).read().encode("utf-8")
+    string_data = open("{}/tests/xml/feed.xml".format(path)).read().encode("utf-8")
 
     xml_extractor_yml = """
     - extractor_type: CustomDataExtractor
@@ -96,7 +96,7 @@ def test_xml_extractor_with_manifest():
         extractors=xml_extractor_manifest
     )
 
-    xml_parser = XMLParser(xml_data=xml_data, extractor_manifest=manifest)
+    xml_parser = XMLParser(string_data=string_data, extractor_manifest=manifest)
     result = xml_parser.run_extractors()
     assert type(result) is dict
     assert "channel_info" in result

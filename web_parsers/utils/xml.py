@@ -1,8 +1,8 @@
 from lxml import etree
 
 
-def parse_xml(xml_data):
-    return etree.fromstring(xml_data)
+def parse_xml(string_data):
+    return etree.fromstring(string_data)
 
 
 def get_nodes(xml_tree, xpath):

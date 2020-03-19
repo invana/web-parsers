@@ -9,7 +9,7 @@ from web_parsers.manifest import WebParserManifest
 import urllib.request
 import yaml
 
-html_string = urllib.request.urlopen("https://invana.io").read().decode("utf-8")
+string_data = urllib.request.urlopen("https://invana.io").read().decode("utf-8")
 extraction_manifest_yaml = """
 - extractor_type: CustomDataExtractor
   extractor_id: content
@@ -37,12 +37,12 @@ manifest = WebParserManifest(
     extractors=extraction_manifest
 )
 
-engine = HTMLParser(html_string=html_string, url="http://dummy-url.com", extraction_manifest=manifest)
-data = engine.run(flatten_extractors=False)
+engine = HTMLParser(string_data=string_data, url="http://dummy-url.com", extractor_manifest=manifest)
+data =  engine.run_extractors(flatten_extractors=False)
 print(data)
 {'content': {'title': 'Enrich your data with information available on the Internet | Invana'}}
 
-data = engine.run(flatten_extractors=True) # this will remove the `content` which is the extractor id,
+data =  engine.run_extractors(flatten_extractors=True) # this will remove the `content` which is the extractor id,
 {'title': 'Enrich your data with information available on the Internet | Invana'}
 ```
 
@@ -56,7 +56,7 @@ from web_parsers.manifest import WebParserManifest
 import urllib.request
 import yaml
 
-html_string = urllib.request.urlopen("https://invana.io/use-cases.html").read().decode("utf-8")
+string_data = urllib.request.urlopen("https://invana.io/use-cases.html").read().decode("utf-8")
 extraction_manifest_yaml = """
 - extractor_type: CustomDataExtractor
   extractor_id: content
@@ -97,8 +97,8 @@ manifest = WebParserManifest(
     extractors=extraction_manifest
 )
 
-engine = HTMLParser(html_string=html_string, url="http://dummy-url.com", extraction_manifest=manifest)
-data = engine.run(flatten_extractors=False) 
+engine = HTMLParser(string_data=string_data, url="http://dummy-url.com", extractor_manifest=manifest)
+data =  engine.run_extractors(flatten_extractors=False) 
 print(data)
 {'content': {'use_cases': [{'body': 'Automate anything on the web with '
                                     'browsers. Post data or crawl and fetch '
@@ -127,7 +127,7 @@ print(data)
                                     'scalable search API.',
                             'heading': 'Instantly Build Search APIs'}]}}
 
-data = engine.run(flatten_extractors=True)
+data =  engine.run_extractors(flatten_extractors=True)
 print(data)
 {'use_cases': [{'body': 'Automate anything on the web with browsers. Post data '
                         'or crawl and fetch structured information from any a '
@@ -158,6 +158,6 @@ print(data)
 
 ```python
 # look at the above example for a practical example with code.
-engine = HTMLParser(html_string=html_string, url="http://dummy-url.com", extraction_manifest=manifest)
-data = engine.run(flatten_extractors=True)
+engine = HTMLParser(string_data=string_data, url="http://dummy-url.com", extractor_manifest=manifest)
+data =  engine.run_extractors(flatten_extractors=True)
 ```

@@ -142,10 +142,11 @@ def test_html2json_extractor():
     extraction_manifest = yaml_to_json(open("{}/tests/configs/html2json-config.yaml".format(path)).read())
     manifest = HTMLExtractorManifest(**extraction_manifest)
     result = CustomDataExtractor(url=url,
-                                html_selector=convert_html_to_selector(html),
-                                extractor=manifest,
-                                extractor_id="json_extractor"
-                                ).run()
+                                 html_selector=convert_html_to_selector(html),
+                                 extractor=manifest,
+                                 extractor_id="json_extractor"
+                                 ).run()
+    print("=====result", result)
     assert 'json_extractor' in result
     assert result['json_extractor'] is not None
     assert result['json_extractor']['title'] == 'Invana Knowledge Platform'

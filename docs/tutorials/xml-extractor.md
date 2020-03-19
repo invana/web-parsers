@@ -9,7 +9,7 @@ from web_parsers.utils.other import yaml_to_json, generate_random_id
 import pprint
 import urllib.request
 
-xml_data = urllib.request.urlopen("https://invana.io/feed.xml").read()
+string_data = urllib.request.urlopen("https://invana.io/feed.xml").read()
 
 xml_extractor_yml = """
 - extractor_type: CustomDataExtractor
@@ -88,7 +88,7 @@ manifest = WebParserManifest(
     extractors=xml_extractor_manifest
 )
 
-xml_parser = XMLParser(xml_data=xml_data, extractor_manifest=manifest)
+xml_parser = XMLParser(string_data=string_data, extractor_manifest=manifest)
 result = xml_parser.run_extractors(flatten_extractors=False)
 pprint.pprint( result)
 
@@ -117,7 +117,7 @@ pprint.pprint( result)
 
 ```python
 # look at the above example for a practical example with code.
-xml_parser = XMLParser(xml_data=xml_data, extractor_manifest=manifest)
+xml_parser = XMLParser(string_data=string_data, extractor_manifest=manifest)
 result = xml_parser.run_extractors(flatten_extractors=True)
 
 

@@ -19,7 +19,7 @@ from web_parsers.manifest import WebParserManifest
 import urllib.request
 import yaml
 
-html_string = urllib.request.urlopen("https://invana.io").read().decode("utf-8")
+string_data = urllib.request.urlopen("https://invana.io").read().decode("utf-8")
 extraction_manifest_yaml = """
 - extractor_type: CustomDataExtractor
   extractor_id: content
@@ -47,8 +47,8 @@ manifest = WebParserManifest(
     extractors=extraction_manifest
 )
 
-engine = HTMLParser(html_string=html_string, url="http://dummy-url.com", extraction_manifest=manifest)
-data = engine.run(flatten_extractors=False)
+engine = HTMLParser(string_data=string_data, url="http://dummy-url.com", extractor_manifest=manifest)
+data =  engine.run_extractors(flatten_extractors=False)
 print(data)
 ```
 

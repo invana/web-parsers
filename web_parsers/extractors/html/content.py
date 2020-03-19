@@ -1,5 +1,5 @@
 from web_parsers.extractors.base import ExtractorBase, ContentExtractorBase
-from web_parsers.utils.selectors import get_elements_element
+from web_parsers.utils.selectors import extract_html_field
 from web_parsers.utils.url import get_urn, get_domain, get_absolute_url
 import json
 
@@ -79,42 +79,86 @@ class MetaTagExtractor(ExtractorBase):
 
 
 class CustomDataExtractor(ContentExtractorBase):
+    extracted_data = {}
 
-    @staticmethod
-    def flatten_data(data=None):
-        if data is None:
-            return data
-        return data.values[0]
+    def add_to_field(self, field_data=None, extractor_field=None):
+        if extractor_field.flatten_data:
+            if field_data is not None:
+                self.extracted_data.update(field_data)
+        else:
+            self.extracted_data[extractor_field.field_id] = field_data
 
     def run(self):
-        data = {}
-        extracted_data = {}
-        for extractor_item in self.extractor.extractor_fields:
-            if extractor_item.data_attribute == 'element' and extractor_item.child_selectors.__len__() > 0:
-                # TODO - currently only support multiple elements strategy. what if multiple=False
-                # review this; not sure if this is still applicable.
-                elements = self.html_selector.css(extractor_item.element_query.get("value"))
-                elements_data = []
-                for el in elements:
-                    datum = {}
-                    for child_selector in extractor_item.child_selectors:
-                        _d = get_elements_element(el, child_selector)
-                        datum[child_selector.field_id] = _d if _d else None
-                    elements_data.append(datum)
-                data_type = extractor_item.data_type
-                if data_type.startswith("List") is False:
-                    single_data = elements_data[0]
-                    extracted_data[extractor_item.field_id] = single_data
+        extractor_fields = self.extractor.extractor_fields
+        for extractor_field in extractor_fields:
+            nodes = self.html_selector.css(extractor_field.element_query.get("value"))
+            child_selectors = extractor_field.child_selectors
+            if extractor_field.data_type.startswith("List"):
+                extracted_items = []
+                if extractor_field.data_attribute == "element":
+                    for node in nodes:
+                        extracted_item = {}
+                        for child_extractor in child_selectors:
+                            extracted_item[child_extractor.field_id] = extract_html_field(
+                                node, child_extractor
+                            )
+                        extracted_items.append(extracted_item)
+                    self.add_to_field(field_data=extracted_items, extractor_field=extractor_field)
                 else:
-                    extracted_data[extractor_item.field_id] = elements_data
-            else:
-                _d = get_elements_element(self.html_selector, extractor_item)
-                extracted_data[extractor_item.field_id] = _d
-            if extractor_item.flatten_data is True:
-                extracted_data[extractor_item.field_id] = self.flatten_data(extracted_data[extractor_item.field_id])
+                    extracted_items = []
+                    for node in nodes:
+                        extracted_items.append(extract_html_field(
+                            node, extractor_field
+                        ))
+                    self.add_to_field(field_data=extracted_items, extractor_field=extractor_field)
 
-        data[self.extractor_id] = extracted_data
-        return data
+            else:
+                if extractor_field.data_attribute == "element":
+                    node = nodes[0]
+                    extracted_item = {}
+                    for child_extractor in child_selectors:
+                        extracted_item[child_extractor.field_id] = extract_html_field(
+                            node, child_extractor
+                        )
+                    self.add_to_field(field_data=extracted_item, extractor_field=extractor_field)
+
+                else:
+                    field_data = extract_html_field(
+                        self.html_selector, extractor_field
+                    )
+                    self.add_to_field(field_data=field_data, extractor_field=extractor_field)
+
+        return {self.extractor_id: self.extracted_data}
+
+    # def run(self):
+    #     data = {}
+    #     extracted_data = {}
+    #     for extractor_item in self.extractor.extractor_fields:
+    #         if extractor_item.data_attribute == 'element' and extractor_item.child_selectors.__len__() > 0:
+    #             # TODO - currently only support multiple elements strategy. what if multiple=False
+    #             # review this; not sure if this is still applicable.
+    #             elements = self.html_selector.css(extractor_item.element_query.get("value"))
+    #             elements_data = []
+    #             for el in elements:
+    #                 datum = {}
+    #                 for child_selector in extractor_item.child_selectors:
+    #                     _d = extract_html_field(el, child_selector)
+    #                     datum[child_selector.field_id] = _d if _d else None
+    #                 elements_data.append(datum)
+    #             data_type = extractor_item.data_type
+    #             if data_type.startswith("List") is False:
+    #                 single_data = elements_data[0]
+    #                 extracted_data[extractor_item.field_id] = single_data
+    #             else:
+    #                 extracted_data[extractor_item.field_id] = elements_data
+    #         else:
+    #             _d = extract_html_field(self.html_selector, extractor_item)
+    #             extracted_data[extractor_item.field_id] = _d
+    #         if extractor_item.flatten_data is True:
+    #             extracted_data[extractor_item.field_id] = self.flatten_data(extracted_data[extractor_item.field_id])
+    #
+    #     data[self.extractor_id] = extracted_data
+    #     return data
 
 
 class IconsExtractor(ExtractorBase):

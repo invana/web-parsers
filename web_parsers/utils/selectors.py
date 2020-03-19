@@ -32,18 +32,18 @@ def transform_data(data=None, data_type=None):
     return data
 
 
-def clean_data(elements=None, items_extractor=None):
+def clean_data(elements=None, item_extractor=None):
     """
 
     This is where are the extracted data will be cleaned up and applied functions and data types as needed.
 
     :param elements:
-    :param items_extractor:
+    :param item_extractor:
     :return:
     """
 
     # TODO - list is calculated
-    data_type = items_extractor.data_type
+    data_type = item_extractor.data_type
     if data_type.startswith("List"):
         multiple = True
     else:
@@ -58,31 +58,31 @@ def clean_data(elements=None, items_extractor=None):
     return data
 
 
-def get_elements_element(html_element, items_extractor):
-    element_query = items_extractor.element_query
-    if items_extractor.data_attribute in ['text']:
+def extract_html_field(html_selector, item_extractor):
+    element_query = item_extractor.element_query
+    if item_extractor.data_attribute in ['text']:
         if element_query.get("type") == 'css':
-            elements = html_element.css("{0}::{1}".format(element_query.get('value'),
-                                                          items_extractor.data_attribute))
-            return clean_data(elements=elements, items_extractor=items_extractor)
+            elements = html_selector.css("{0}::{1}".format(element_query.get('value'),
+                                                          item_extractor.data_attribute))
+            return clean_data(elements=elements, item_extractor=item_extractor)
         else:
-            elements = html_element.xpath("{0}/{1}".format(element_query.get('value'),
-                                                           items_extractor.data_attribute))
-            return clean_data(elements=elements, items_extractor=items_extractor)
-    elif items_extractor.data_attribute == 'html':
+            elements = html_selector.xpath("{0}/{1}".format(element_query.get('value'),
+                                                           item_extractor.data_attribute))
+            return clean_data(elements=elements, item_extractor=item_extractor)
+    elif item_extractor.data_attribute == 'html':
         if element_query.get('type') == 'css':
-            elements = html_element.css(element_query.get('value'))
-            return clean_data(elements=elements, items_extractor=items_extractor)
+            elements = html_selector.css(element_query.get('value'))
+            return clean_data(elements=elements, item_extractor=item_extractor)
         else:
-            elements = html_element.xpath("{0}/{1}".format(element_query.get('value'),
-                                                           items_extractor.data_attribute))
-            return clean_data(elements=elements, items_extractor=items_extractor)
+            elements = html_selector.xpath("{0}/{1}".format(element_query.get('value'),
+                                                           item_extractor.data_attribute))
+            return clean_data(elements=elements, item_extractor=item_extractor)
     else:
         if element_query.get('type') == 'css':
-            elements = html_element.css(element_query.get('value')) \
-                .xpath("@{0}".format(items_extractor.data_attribute))
-            return clean_data(elements=elements, items_extractor=items_extractor)
+            elements = html_selector.css(element_query.get('value')) \
+                .xpath("@{0}".format(item_extractor.data_attribute))
+            return clean_data(elements=elements, item_extractor=item_extractor)
         else:
-            elements = html_element.xpath("{0}/{1}".format(element_query.get('value'),
-                                                           items_extractor.data_attribute))
-            return clean_data(elements=elements, items_extractor=items_extractor)
+            elements = html_selector.xpath("{0}/{1}".format(element_query.get('value'),
+                                                           item_extractor.data_attribute))
+            return clean_data(elements=elements, item_extractor=item_extractor)
