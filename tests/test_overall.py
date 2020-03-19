@@ -9,8 +9,8 @@ path = os.getcwd()
 
 def test_overall_web_parser_engine():
     html = open("{}/tests/page.html".format(path), "r").read()
-    extraction_manifest = yaml_to_json(open("{}/tests/configs/extract.yaml".format(path)).read())
-    manifest = WebParserManifest(extractors=extraction_manifest)
+    extractor_manifest = yaml_to_json(open("{}/tests/configs/extract.yaml".format(path)).read())
+    manifest = WebParserManifest(extractors=extractor_manifest)
     engine = HTMLParser(string_data=html, url="http://localhost", extractor_manifest=manifest)
     result = engine.run_extractors()
     assert result['meta_tags'] is not None
@@ -21,7 +21,7 @@ def test_overall_web_parser_engine():
 
 
 def test_overall_web_parser_engine_with_dictionaries():
-    extraction_manifest = yaml_to_json(open("{}/tests/configs/extract_full.yaml".format(path)).read())
+    extractor_manifest = yaml_to_json(open("{}/tests/configs/extract_full.yaml".format(path)).read())
     html = open("{}/tests/page.html".format(path), "r").read()
 
     manifest = WebParserManifest(
@@ -35,7 +35,7 @@ def test_overall_web_parser_engine_with_dictionaries():
             "email": "rrmerugu@gmail.com",
             "website_url": "https://rrmerugu.github.io"
         },
-        extractors=extraction_manifest
+        extractors=extractor_manifest
     )
     engine = HTMLParser(string_data=html, url="http://localhost", extractor_manifest=manifest)
     result = engine.run_extractors()
@@ -50,8 +50,8 @@ def test_overall_web_parser_engine_with_dictionaries():
 
 def test_overall_web_parser_engine_failure_case():
     html = open("{}/tests/page.html".format(path), "r").read()
-    extraction_manifest = yaml_to_json(open("{}/tests/configs/extract-failcase.yaml".format(path)).read())
-    manifest = WebParserManifest(extractors=extraction_manifest)
+    extractor_manifest = yaml_to_json(open("{}/tests/configs/extract-failcase.yaml".format(path)).read())
+    manifest = WebParserManifest(extractors=extractor_manifest)
     engine = HTMLParser(string_data=html, url="http://localhost", extractor_manifest=manifest)
     result = engine.run_extractors()
     assert "meta_tags" not in result
@@ -61,8 +61,8 @@ def test_overall_web_parser_engine_failure_case():
 
 def test_overall_web_parser_engine_failure_invalid_extractor_type():
     html = open("{}/tests/page.html".format(path), "r").read()
-    extraction_manifest = yaml_to_json(open("{}/tests/configs/extract-failcase2.yaml".format(path)).read())
-    manifest = WebParserManifest(extractors=extraction_manifest)
+    extractor_manifest = yaml_to_json(open("{}/tests/configs/extract-failcase2.yaml".format(path)).read())
+    manifest = WebParserManifest(extractors=extractor_manifest)
     engine = HTMLParser(string_data=html, url="http://localhost", extractor_manifest=manifest)
 
     result = engine.run_extractors()

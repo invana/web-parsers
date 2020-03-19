@@ -31,7 +31,7 @@ extraction_manifest_yaml = """
     data_attribute: text
     data_type: StringField
 """
-extraction_manifest = yaml.load(extraction_manifest_yaml, yaml.Loader)
+extractor_manifest = yaml.load(extraction_manifest_yaml, yaml.Loader)
 
 manifest = WebParserManifest(
     title="invana.io blogs",
@@ -44,7 +44,7 @@ manifest = WebParserManifest(
         "email": "rrmerugu@gmail.com",
         "website_url": "https://rrmerugu.github.io"
     },
-    extractors=extraction_manifest
+    extractors=extractor_manifest
 )
 
 engine = HTMLParser(string_data=string_data, url="http://dummy-url.com", extractor_manifest=manifest)

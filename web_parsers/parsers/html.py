@@ -1,8 +1,6 @@
-from importlib import import_module
 import logging
 from web_parsers.utils import convert_html_to_selector
 from .base import ParserBase
-from web_parsers.utils.exceptions import InvalidExtractor
 
 logger = logging.getLogger(__name__)
 
@@ -10,7 +8,7 @@ logger = logging.getLogger(__name__)
 class HTMLParser(ParserBase):
     """
 
-    extraction_manifest should be a list of extractors ie., `web_parsers.extractors.
+    extractor_manifest should be a list of extractors ie., `web_parsers.extractors.
     """
     selector_key = "html_selector"
 
@@ -28,4 +26,3 @@ class HTMLParser(ParserBase):
         :return:
         """
         return convert_html_to_selector(string_data)
-

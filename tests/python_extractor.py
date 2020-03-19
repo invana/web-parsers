@@ -9,10 +9,10 @@ url = "http://dummy-url.com"
 
 
 def test_python_extractor():
-    extraction_manifest = yaml_to_json(open("{}/tests/configs/extract-python.yaml".format(path)).read())
+    extractor_manifest = yaml_to_json(open("{}/tests/configs/extract-python.yaml".format(path)).read())
     result = PythonExtractorManifest(url=url,
                                   html_selector=convert_html_to_selector(html),
-                                  extractor=extraction_manifest,
+                                  extractor=extractor_manifest,
                                   extractor_id="python_extractor"
                                   ).run()
     assert 'python_extractor' in result

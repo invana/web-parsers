@@ -139,8 +139,8 @@ def test_icon_extractor():
 
 
 def test_html2json_extractor():
-    extraction_manifest = yaml_to_json(open("{}/tests/configs/html2json-config.yaml".format(path)).read())
-    manifest = HTMLExtractorManifest(**extraction_manifest)
+    extractor_manifest = yaml_to_json(open("{}/tests/configs/html2json-config.yaml".format(path)).read())
+    manifest = HTMLExtractorManifest(**extractor_manifest)
     result = CustomDataExtractor(url=url,
                                  html_selector=convert_html_to_selector(html),
                                  extractor=manifest,
