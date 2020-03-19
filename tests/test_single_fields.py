@@ -1,4 +1,4 @@
-from web_parser.fields import FloatField, RawField, StringField, IntField, DictField
+from web_parsers.fields import FloatField, RawField, StringField, IntField, DictField
 
 
 def test_string_field_transformer():

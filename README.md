@@ -1,4 +1,4 @@
-# Web Parser
+# Web Parsers
 
 Simple, extendable HTML and XML data extraction engine using YAML configurations and some times pythonic functions.
 
@@ -17,15 +17,15 @@ Python 3.6+
 
 ## Installation
 ```bash
-pip install -e git+https://github.com/invanalabs/web-parser.git#egg=web_parser
+pip install -e git+https://github.com/invanalabs/web-parsers.git#egg=web_parsers
 ```
 
 ## How to use
 
 ### HTMLParser
 ```python
-from web_parser import HTMLParser
-from web_parser.manifest import WebParserManifest
+from web_parsers import HTMLParser
+from web_parsers.manifest import WebParserManifest
 import urllib.request
 import yaml
 
@@ -48,7 +48,7 @@ extraction_manifest = yaml.load(extraction_manifest_yaml, yaml.Loader)
 manifest = WebParserManifest(
     title="invana.io blogs",
     domain="invana.io",
-    version="beta",
+    version="alpha",
     test_urls="https://invana.io/blogs",
     owner={
         "title": "Ravi Raja Merugu",
@@ -86,8 +86,8 @@ print(data)
 ### XMLParser
 
 ```python
-from web_parser.parsers.xml import XMLParser
-from web_parser.utils.other import yaml_to_json, generate_random_id
+from web_parsers.parsers.xml import XMLParser
+from web_parsers.utils.other import yaml_to_json, generate_random_id
 import pprint
 import urllib.request
 

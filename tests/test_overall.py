@@ -1,7 +1,7 @@
-from web_parser.parsers import HTMLParser
-from web_parser.utils import yaml_to_json
+from web_parsers.parsers import HTMLParser
+from web_parsers.utils import yaml_to_json
 import os
-from web_parser.manifest import WebParserManifest
+from web_parsers.manifest import WebParserManifest
 import pytest
 
 path = os.getcwd()
@@ -27,7 +27,7 @@ def test_overall_web_parser_engine_with_dictionaries():
     manifest = WebParserManifest(
         title="invana.io blogs",
         domain="invana.io",
-        version="beta",
+        version="alpha",
         test_urls="https://invana.io/blogs",
         owner={
             "title": "Ravi Raja Merugu",

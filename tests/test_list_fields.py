@@ -1,4 +1,4 @@
-from web_parser.fields import ListFloatField, ListIntField, ListDictField, ListRawField, ListStringField
+from web_parsers.fields import ListFloatField, ListIntField, ListDictField, ListRawField, ListStringField
 
 
 def test_string_list_field_transformer():

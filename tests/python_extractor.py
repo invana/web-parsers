@@ -1,6 +1,6 @@
-from web_parser.parsers import HTMLParser
-from web_parser.extractors import PythonExtractorManifest
-from web_parser.utils import yaml_to_json, convert_html_to_selector
+from web_parsers.parsers import HTMLParser
+from web_parsers.extractors import PythonExtractorManifest
+from web_parsers.utils import yaml_to_json, convert_html_to_selector
 import os
 
 path = os.getcwd()

@@ -1,7 +1,7 @@
 from importlib import import_module
 import logging
-from web_parser.utils import convert_html_to_selector
-from web_parser.utils.exceptions import InvalidExtractor
+from web_parsers.utils import convert_html_to_selector
+from web_parsers.utils.exceptions import InvalidExtractor
 
 logger = logging.getLogger(__name__)
 
@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 class HTMLParser:
     """
 
-    extraction_manifest should be a list of extractors ie., `web_parser.extractors.
+    extraction_manifest should be a list of extractors ie., `web_parsers.extractors.
     """
 
     def __init__(self, url=None, html_string=None, extraction_manifest=None):

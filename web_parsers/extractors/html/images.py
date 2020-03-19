@@ -1,4 +1,4 @@
-from web_parser.extractors.base import ExtractorBase
+from web_parsers.extractors.base import ExtractorBase
 
 
 class ImagesExtractor(ExtractorBase):

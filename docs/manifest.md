@@ -12,7 +12,7 @@ from manifest.alpha import WebParserManifest
 manifest = WebParserManifest(
     title="invana.io blogs",
     domain="invana.io",
-    version="beta",
+    version="alpha",
     test_urls=["https://invana.io/blogs",],
     owner={
         "title": "Ravi Raja Merugu",
@@ -25,7 +25,7 @@ manifest = WebParserManifest(
 ```
 ## 1. Types of Extractors
 
-Web Parser provides three types of extractors for data extraction from HTML. 
+Web Parsers provides three types of extractors for data extraction from HTML. 
 
 1. Standard Extractors - extract data from standard html tags
 2. Custom Data Extractor -  extract data using your own elements and data attribute extraction
@@ -41,7 +41,7 @@ JSON+LD, tables, ordered and unordered lists.
 
  
 ```python
-from web_parser.extractors.html.content import  PageOverviewExtractor, \
+from web_parsers.extractors.html.content import  PageOverviewExtractor, \
     ParagraphsExtractor, HeadingsExtractor, TableContentExtractor, MetaTagExtractor, IconsExtractor, JSONLDExtractor, \
     FeedUrlExtractor, PlainHTMLContentExtractor, MainContentExtractor
 ```

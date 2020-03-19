@@ -5,8 +5,8 @@ from lxml import etree
 
 class XMLParser:
     """
-from web_parser.parsers.xml import XMLParser
-from web_parser.utils.other import yaml_to_json, generate_random_id
+from web_parsers.parsers.xml import XMLParser
+from web_parsers.utils.other import yaml_to_json, generate_random_id
 import pprint
 import urllib.request
 

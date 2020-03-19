@@ -1,4 +1,4 @@
-from web_parser.utils.url import get_absolute_url, get_domain, get_urn
+from web_parsers.utils.url import get_absolute_url, get_domain, get_urn
 
 
 def test_get_urn():

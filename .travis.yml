@@ -9,7 +9,7 @@ install:
   - pip install -r requirements-test.txt
 
 script:
-  - coverage run -m pytest  --cov-report xml  --cov=./web_parser tests/
+  - coverage run -m pytest  --cov-report xml  --cov=./web_parsers tests/
 
 after_success:
   - codecov

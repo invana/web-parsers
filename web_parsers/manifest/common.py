@@ -15,7 +15,7 @@ class Owner:
 
 
 class WebParserManifest:
-    valid_versions = ("beta",)
+    valid_versions = ("alpha",)
     valid_parser_types = ("html", "xml")
     """
     Usage
@@ -24,7 +24,7 @@ class WebParserManifest:
     WebParserManifest(
         title="invana.io blogs",
         domain="invana.io",
-        version="beta",
+        version="alpha",
         test_urls="https://invana.io/blogs",
         extractors=[],
         owner={
@@ -40,7 +40,7 @@ class WebParserManifest:
                  title=None,
                  parser_type="html",
                  domain=None,
-                 version="beta",
+                 version="alpha",
                  test_urls=None,
                  extractors=None,
                  owner=None,

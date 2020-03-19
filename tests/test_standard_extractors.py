@@ -1,9 +1,9 @@
-from web_parser.extractors.html import ParagraphsExtractor, PageOverviewExtractor, \
+from web_parsers.extractors.html import ParagraphsExtractor, PageOverviewExtractor, \
     AllLinksExtractor, AllLinksAnalyticsExtractor, JSONLDExtractor, TableContentExtractor, \
     MetaTagExtractor, HeadingsExtractor, FeedUrlExtractor, ImagesExtractor, PlainHTMLContentExtractor, \
     IconsExtractor, CustomDataExtractor
-from web_parser.manifest.alpha.html import HTMLExtractorManifest
-from web_parser.utils import yaml_to_json, convert_html_to_selector
+from web_parsers.manifest.alpha.html import HTMLExtractorManifest
+from web_parsers.utils import yaml_to_json, convert_html_to_selector
 import os
 
 path = os.getcwd()

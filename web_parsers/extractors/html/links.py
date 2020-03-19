@@ -1,5 +1,5 @@
-from web_parser.extractors.base import ExtractorBase, ContentExtractorBase
-from web_parser.utils.url import get_urn, get_domain
+from web_parsers.extractors.base import ExtractorBase, ContentExtractorBase
+from web_parsers.utils.url import get_urn, get_domain
 
 
 class AllLinksExtractor(ExtractorBase):

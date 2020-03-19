@@ -3,7 +3,7 @@ import logging
 from ..items import ItemManifest
 
 logger = logging.getLogger(__name__)
-extractor_classes = import_module(f'web_parser.extractors.html')
+extractor_classes = import_module(f'web_parsers.extractors.html')
 
 
 class HTMLExtractorManifest:

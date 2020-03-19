@@ -1,4 +1,4 @@
-from web_parser.utils.selectors import convert_html_to_selector, transform_data
+from web_parsers.utils.selectors import convert_html_to_selector, transform_data
 import os
 from parsel import Selector
 

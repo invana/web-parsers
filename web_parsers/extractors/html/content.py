@@ -1,6 +1,6 @@
-from web_parser.extractors.base import ExtractorBase, ContentExtractorBase
-from web_parser.utils.selectors import get_elements_element
-from web_parser.utils.url import get_urn, get_domain, get_absolute_url
+from web_parsers.extractors.base import ExtractorBase, ContentExtractorBase
+from web_parsers.utils.selectors import get_elements_element
+from web_parsers.utils.url import get_urn, get_domain, get_absolute_url
 import json
 
 

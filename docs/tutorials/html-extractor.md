@@ -4,8 +4,8 @@
 
 ## Regular data extractor
 ```python
-from web_parser import HTMLParser
-from web_parser.manifest import WebParserManifest
+from web_parsers import HTMLParser
+from web_parsers.manifest import WebParserManifest
 import urllib.request
 import yaml
 
@@ -26,7 +26,7 @@ extraction_manifest = yaml.load(extraction_manifest_yaml, yaml.Loader)
 manifest = WebParserManifest(
     title="invana.io blogs",
     domain="invana.io",
-    version="beta",
+    version="alpha",
     test_urls="https://invana.io/blogs",
     owner={
         "title": "Ravi Raja Merugu",
@@ -51,8 +51,8 @@ data = engine.run(flatten_extractors=True) # this will remove the `content` whic
 ## With child selectors
 ```python
 
-from web_parser import HTMLParser
-from web_parser.manifest import WebParserManifest
+from web_parsers import HTMLParser
+from web_parsers.manifest import WebParserManifest
 import urllib.request
 import yaml
 
@@ -86,7 +86,7 @@ extraction_manifest = yaml.load(extraction_manifest_yaml, yaml.Loader)
 manifest = WebParserManifest(
     title="invana.io blogs",
     domain="invana.io",
-    version="beta",
+    version="alpha",
     test_urls="https://invana.io/blogs",
     owner={
         "title": "Ravi Raja Merugu",

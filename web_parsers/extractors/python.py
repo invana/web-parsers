@@ -1,4 +1,4 @@
-from web_parser.extractors.base import ExtractorBase, ContentExtractorBase
+from web_parsers.extractors.base import ExtractorBase, ContentExtractorBase
 import logging
 
 logger = logging.getLogger(__name__)
