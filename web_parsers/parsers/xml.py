@@ -1,6 +1,9 @@
 import xmltodict as xd
 import json
-from lxml import etree
+from web_parsers.utils.xml import get_nodes, parse_xml, get_node_text, get_node_html
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class XMLParser:
@@ -13,7 +16,7 @@ import urllib.request
 xml_data = urllib.request.urlopen("https://invana.io/feed.xml").read()
 
 xml_extractor_yml = \"""
-- extractor_type: XML2JSONExtractor
+- extractor_type: CustomDataExtractor
   extractor_id: channel_info
   extractor_fields:
   - field_id: channel
@@ -87,80 +90,35 @@ result = to_dict()
     """
     parsed_xml_data = None
 
-    def __init__(self, xml_data, extractor_manifest=None):
+    def __init__(self, xml_data, url=None, extractor_manifest=None):
         self.xml_data = xml_data
+        self.url = url
         self.extractor_manifest = extractor_manifest
 
     def to_dict(self):
         return json.loads(json.dumps(xd.parse(self.xml_data)))
 
-    @staticmethod
-    def parse_xml(xml_data):
-        return etree.fromstring(xml_data)
-
-    @staticmethod
-    def get_nodes(xml_tree, xpath):
-        return xml_tree.xpath(xpath)
-
-    @staticmethod
-    def extract_from_field(node, extractor_config, ):
-        child_node = node.xpath(extractor_config.get("element_query", {}).get("value").lstrip("/"))[0]
-        if extractor_config.get("data_attribute") == "text":
-            return child_node.text or '' + ''.join(
-                etree.tostring(e) for e in child_node)
-        elif extractor_config.get("data_attribute") == "html":
-            return etree.tostring(child_node, pretty_print=False)
-        else:
-            return child_node.attrib.get(
-                extractor_config.get("data_attribute")
+    def run_extractor(self, xml_tree=None, extractor=None):
+        extractor_id = extractor.extractor_id
+        logger.info("Running extractor:'{}' on url:{}".format(extractor_id, self.url))
+        try:
+            extractor_object = extractor.extractor_cls(
+                url=self.url,
+                html_selector=xml_tree,
+                extractor=extractor,
+                extractor_id=extractor_id
             )
-
-    @staticmethod
-    def get_nodes_from_data_type():
-        pass
-
-    def run_extractor(self, extractor):
-        extractor_fields = extractor.get("extractor_fields", [])
-        extracted_data = {}
-        for extractor_field in extractor_fields:
-            nodes = self.get_nodes(
-                self.parsed_xml_data,
-                extractor_field.get("element_query", {}).get("value")
+            return extractor_object.run()
+        except Exception as error:
+            logger.error(
+                "Failed to extract data from  the extractor '{extractor_id}:{extractor_type}' on url "
+                "'{url}' with error: '{error}'".format(
+                    extractor_id=extractor_id,
+                    extractor_type=extractor.extractor_type,
+                    url=self.url,
+                    error=error)
             )
-            child_selectors = extractor_field.get("child_selectors", [])
-
-            if extractor_field.get("data_type").startswith("List"):
-                extracted_items = []
-                if extractor_field.get("data_attribute") == "element":
-                    for node in nodes:
-                        extracted_item = {}
-                        for child_extractor in child_selectors:
-                            extracted_item[child_extractor.get('field_id')] = self.extract_from_field(
-                                node, child_extractor
-                            )
-                        extracted_items.append(extracted_item)
-                    extracted_data[extractor_field.get('field_id')] = extracted_items
-                else:
-                    extracted_items = []
-                    for node in nodes:
-                        extracted_items.append(self.extract_from_field(
-                            node, extractor_field
-                        ))
-                    extracted_data[extractor_field.get('field_id')] = extracted_items
-            else:
-                if extractor_field.get("data_attribute") == "element":
-                    node = nodes[0]
-                    extracted_item = {}
-                    for child_extractor in child_selectors:
-                        extracted_item[child_extractor.get('field_id')] = self.extract_from_field(
-                            node, child_extractor
-                        )
-                    extracted_data[extractor_field.get('field_id')] = extracted_item
-                else:
-                    extracted_data[extractor_field.get('field_id')] = self.extract_from_field(
-                        self.parsed_xml_data, extractor_field
-                    )
-        return extracted_data
+            return {extractor_id: None}
 
     @staticmethod
     def flatten_extracted_data(all_extracted_data):
@@ -170,12 +128,12 @@ result = to_dict()
         return all_extracted_data_new
 
     def run_extractors(self, flatten_extractors=False):
-        self.parsed_xml_data = self.parse_xml(self.xml_data)
+        xml_tree = parse_xml(self.xml_data)
 
         all_extracted_data = {}
-        for extractor in self.extractor_manifest:
-            extracted_data = self.run_extractor(extractor)
-            all_extracted_data[extractor.get("extractor_id")] = extracted_data
+        for extractor in self.extractor_manifest.extractors:
+            extracted_data = self.run_extractor(extractor=extractor, xml_tree=xml_tree)
+            all_extracted_data[extractor.extractor_id] = extracted_data
 
         if flatten_extractors is True:
             return self.flatten_extracted_data(all_extracted_data)

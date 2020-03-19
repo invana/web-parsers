@@ -3,6 +3,7 @@
 
 ```python
 
+from web_parsers.manifest import WebParserManifest
 from web_parsers.parsers.xml import XMLParser
 from web_parsers.utils.other import yaml_to_json, generate_random_id
 import pprint
@@ -11,7 +12,7 @@ import urllib.request
 xml_data = urllib.request.urlopen("https://invana.io/feed.xml").read()
 
 xml_extractor_yml = """
-- extractor_type: XML2JSONExtractor
+- extractor_type: CustomDataExtractor
   extractor_id: channel_info
   extractor_fields:
   - field_id: channel
@@ -70,20 +71,61 @@ xml_extractor_yml = """
           value: guid
         data_attribute: isPermaLink
         data_type: StringField
-        
-    
 """
 xml_extractor_manifest = yaml_to_json(xml_extractor_yml)
+manifest = WebParserManifest(
+    title="invana.io blogs",
+    domain="invana.io",
+    version="alpha",
+    test_urls=["https://invana.io/feed.xml", ],
+    parser_type="xml",
+    owner={
+        "title": "Ravi Raja Merugu",
+        "ownership_type": "Individual",
+        "email": "rrmerugu@gmail.com",
+        "website_url": "https://rrmerugu.github.io"
+    },
+    extractors=xml_extractor_manifest
+)
 
-xml_parser = XMLParser(xml_data=xml_data, extractor_manifest=xml_extractor_manifest)
-result = xml_parser.run_extractors(flatten_extractors=True)
+xml_parser = XMLParser(xml_data=xml_data, extractor_manifest=manifest)
+result = xml_parser.run_extractors(flatten_extractors=False)
 pprint.pprint( result)
+
+{'channel_info': {'channel': {
+    'description': 'Connect to your databases, microservices or data '
+                            'from internet and create Knowledge & Data APIs in '
+                            'near realtime',
+             'title': 'Enrich your data with information available on the '
+                      'Internet | Invana'},
+    'pages': [
+        {'description': 'Official blog of Invana',
+            'guid': 'https://invana.io/blog',
+            'is_perma_link': 'true',
+            'link': '/blog',
+            'title': 'Blog - Updates and stories | Invana'
+        },
+            ...
+            ]           
+}
+}
+```
+
+
+
+## Flatten Extracted data
+
+```python
+# look at the above example for a practical example with code.
+xml_parser = XMLParser(xml_data=xml_data, extractor_manifest=manifest)
+result = xml_parser.run_extractors(flatten_extractors=True)
+
 
 {'channel': {
     'description': 'Connect to your databases, microservices or data '
                             'from internet and create Knowledge & Data APIs in '
                             'near realtime',
-             'title': 'Enrich your data with information available on the '
+     'title': 'Enrich your data with information available on the '
                       'Internet | Invana'},
     'pages': [
         {'description': 'Official blog of Invana',

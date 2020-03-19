@@ -7,7 +7,7 @@ extract data from HTML/XML.
 ## Example Usage
 
 ```python
-from manifest.alpha import WebParserManifest
+from web_parsers.manifest import WebParserManifest
 
 manifest = WebParserManifest(
     title="invana.io blogs",
@@ -219,4 +219,6 @@ be used for indexing the data. Valid data types are :
 8. ListFloatField
 9. DictField
 10. ListDictField
+
+
 

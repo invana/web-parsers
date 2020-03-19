@@ -17,7 +17,7 @@ def test_xml_extractor_with_manifest():
     xml_data = open("{}/tests/xml/feed.xml".format(path)).read().encode("utf-8")
 
     xml_extractor_yml = """
-    - extractor_type: XML2JSONExtractor
+    - extractor_type: CustomDataExtractor
       extractor_id: channel_info
       extractor_fields:
       - field_id: channel

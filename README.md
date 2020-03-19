@@ -86,6 +86,7 @@ print(data)
 ### XMLParser
 
 ```python
+from web_parsers.manifest import WebParserManifest
 from web_parsers.parsers.xml import XMLParser
 from web_parsers.utils.other import yaml_to_json, generate_random_id
 import pprint
@@ -94,7 +95,7 @@ import urllib.request
 xml_data = urllib.request.urlopen("https://invana.io/feed.xml").read()
 
 xml_extractor_yml = """
-- extractor_type: XML2JSONExtractor
+- extractor_type: CustomDataExtractor
   extractor_id: channel_info
   extractor_fields:
   - field_id: channel
@@ -158,7 +159,24 @@ xml_extractor_yml = """
 """
 xml_extractor_manifest = yaml_to_json(xml_extractor_yml)
 
-xml_parser = XMLParser(xml_data=xml_data, extractor_manifest=xml_extractor_manifest)
+manifest = WebParserManifest(
+    title="invana.io blogs",
+    domain="invana.io",
+    version="alpha",
+    test_urls=["https://invana.io/feed.xml", ],
+    parser_type="xml",
+    owner={
+        "title": "Ravi Raja Merugu",
+        "ownership_type": "Individual",
+        "email": "rrmerugu@gmail.com",
+        "website_url": "https://rrmerugu.github.io"
+    },
+    extractors=xml_extractor_manifest
+)
+
+
+
+xml_parser = XMLParser(xml_data=xml_data, extractor_manifest=manifest)
 result = xml_parser.run_extractors(flatten_extractors=True)
 pprint.pprint( result)
 {'channel': {'description': 'Connect to your databases, microservices or data '

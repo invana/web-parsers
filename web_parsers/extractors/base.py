@@ -1,7 +1,6 @@
-"""
+import logging
 
-
-"""
+logger = logging.getLogger(__name__)
 
 
 class ExtractorBase:
@@ -14,11 +13,11 @@ class ExtractorBase:
         :param html_selector: html html_selector of the request
         :param extractor_id: the field with which data is stored in database.
         """
-        if url is None:
-            raise Exception(
-                "url cannot be blank, as it is used to generate absolute urls in most of the cases, you can "
-                "give http://dummy-url.com as url, if you want to give a dummy url"
-            )
+        # if url is None:
+        #     logger.warning(
+        #         "url cannot be blank, as it is used to generate absolute urls in most of the cases, you can "
+        #         "give http://dummy-url.com as url, if you want to give a dummy url"
+        #     )
         if None in [html_selector, extractor_id]:
             raise Exception(
                 "Invalid input to the extractor class, html_selector, extractor and extractor_id are mandatory")
