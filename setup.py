@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='web-parsers',
-    version='0.0.1',
+    version='0.0.2',
     description='Simple, extendable HTML and XML data extraction engine using YAML configurations '
                 'and some times pythonic functions.',
     author='Ravi Raja Merugu',
