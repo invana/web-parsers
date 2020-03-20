@@ -15,7 +15,7 @@ setup(
     ),
     install_requires=[
         'parsel>=1.5.2',
-        'PyYAML==5.1.2'
+        'PyYAML==5.1.2',
         'xmltodict==0.12.0'
     ],
     entry_points={
