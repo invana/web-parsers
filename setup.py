@@ -25,9 +25,9 @@ setup(
         'Development Status :: 3 - Alpha',
         # Chose either "3 - Alpha", "4 - Beta" or "5 - Production/Stable" as the current state of your package
         'Environment :: Console',
-        'Intended Audience :: Developers',  # Define that your audience are developers
+        'Intended Audience :: Developers',
         'Topic :: Software Development :: Build Tools',
-        'License :: OSI Approved :: Apache License',  # Again, pick a license
+        'License :: OSI Approved :: Apache Software License',
         'Operating System :: POSIX :: Linux',
         'Operating System :: Mac OS',
         'Programming Language :: Python',
