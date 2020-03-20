@@ -17,6 +17,10 @@ Python 3.6+
 
 ## Installation
 ```bash
+pip install web-parsers 
+
+or 
+
 pip install -e git+https://github.com/invanalabs/web-parsers.git#egg=web_parsers
 ```
 
