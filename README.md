@@ -7,8 +7,8 @@ that can be used for extracting data from web data like HTML or XML.
 
 This library can let users write extractors for once site and reuse it with similar site and soon etc.
 
-[![Build Status](https://travis-ci.org/invanalabs/web_parsers.svg?branch=master)](https://travis-ci.org/invanalabs/web_parsers)
-[![codecov](https://codecov.io/gh/invanalabs/web_parsers/branch/master/graph/badge.svg)](https://codecov.io/gh/invanalabs/web_parsers)
+[![Build Status](https://travis-ci.org/invanalabs/web-parsers.svg?branch=master)](https://travis-ci.org/invanalabs/web-parsers)
+[![codecov](https://codecov.io/gh/invanalabs/web-parsers/branch/master/graph/badge.svg)](https://codecov.io/gh/invanalabs/web-parsers)
 
 ## Requirements
 
